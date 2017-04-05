@@ -1,0 +1,12 @@
+# python artifacts
+__pycache__/
+
+# PyCharm folders
+.idea/
+
+# pyenv files
+.python-version
+
+# pytest folders
+.cache/
+.test_database/
