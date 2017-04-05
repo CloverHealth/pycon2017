@@ -1,12 +1,17 @@
 # python artifacts
 __pycache__/
 
-# PyCharm folders
+# PyCharm artifacts
 .idea/
 
 # pyenv files
 .python-version
 
-# pytest folders
+# pytest artifacts
 .cache/
+
+# ETL test suite artifacts
 .test_database/
+
+# Jupyter Notebook artifacts
+.ipynb_checkpoints/

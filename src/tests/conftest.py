@@ -8,10 +8,7 @@ import sqlalchemy.orm as sa_orm
 import testing.postgresql
 
 from app import models
-
-# test database subdirectory
-KEEPDB_PATH = '.test_database'
-
+from tests import constants
 
 # Test database options
 DatabaseConfig = namedtuple(
@@ -30,7 +27,7 @@ def db_options(request) -> DatabaseConfig:
     keepdb_active = request.config.getoption('--keepdb')
 
     if keepdb_active:
-        keepdb_path = os.path.join(os.getcwd(), KEEPDB_PATH)
+        keepdb_path = os.path.join(os.getcwd(), constants.KEEPDB_PATH)
     else:
         keepdb_path = None
 
@@ -71,7 +68,6 @@ def db_engine(db_options:DatabaseConfig, db_url: str):
 
     yield db_engine
 
-    # TODO verify this always gets called even if a test throws an uncaught exception
     db_engine.dispose()
 
 

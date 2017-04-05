@@ -2,17 +2,16 @@
 
 ## Requirements
 
-* python 3.5.3
-* Postgres 9.6.x
+* python 3.5+
+* Postgres 9.5+
 
 ## Setup
-
-_TODO_: Change instructions to be Docker-based
 
 Run the following:
 
     pip install -r requirements.txt
     pip install -r test_requirements.txt
+    pip install -r dev_requirements.txt
     
 ## Running tests
 
@@ -26,5 +25,13 @@ However, for faster repeated execution, you can reuse the same test database wit
     ...
     pytest --keepdb src/
     ...
-    # when finished or if the model schema has changed, run the following
+    # when finished or if the model schema has changed, just run the following
     rm -rf .test_database
+
+## Running the notebook
+
+Start up Jupyter Notebook
+
+    jupyter notebook
+
+Open the `etl_workshop` notebook (`etl_workshop.ipynb`) and enjoy!
