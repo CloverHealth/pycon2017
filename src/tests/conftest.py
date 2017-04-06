@@ -18,7 +18,7 @@ DatabaseConfig = namedtuple(
 
 
 @pytest.fixture(scope='session')
-def db_options(request) -> DatabaseConfig:
+def db_options(request, root_path:str) -> DatabaseConfig:
     """
     Fixture of test database options for the entire pytest session
     
@@ -27,7 +27,7 @@ def db_options(request) -> DatabaseConfig:
     keepdb_active = request.config.getoption('--keepdb')
 
     if keepdb_active:
-        keepdb_path = os.path.join(os.getcwd(), constants.KEEPDB_PATH)
+        keepdb_path = os.path.join(root_path, constants.KEEPDB_PATH)
     else:
         keepdb_path = None
 

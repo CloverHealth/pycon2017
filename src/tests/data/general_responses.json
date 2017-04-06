@@ -1,0 +1,17 @@
+{
+  "main": {
+    "cpid": "CP7116038",
+    "first_name": "Clover AWV Test",
+    "last_name": "Knight",
+    "address_1": "32 W 20th Ave",
+    "address_2": "Apartment 4",
+    "city": "Newark",
+    "zipcode": "07114",
+    "gender": "M",
+    "preferred_language": "english",
+    "state": "NJ",
+    "new_member": true,
+    "signed_on": "2017-01-15",
+    "age": 27
+  }
+}
