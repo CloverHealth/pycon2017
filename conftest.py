@@ -1,14 +1,20 @@
 """ configure the test suite to share a database """
 
+import datetime
 import functools
 import glob
 import os
+import re
 
 import pytest
 import sqlalchemy as sa
+import sqlalchemy.event as sa_event
 import sqlalchemy.exc as sa_exc
 import sqlalchemy.orm as sa_orm
 import testing.postgresql
+
+
+REPO_BASE_DIR = os.path.dirname(__file__)
 
 
 @pytest.fixture(scope='session')
@@ -77,6 +83,7 @@ class PostgresTestUtil:
         'pg_temp_1',
         'pg_toast',
         'pg_toast_temp_1',
+        'public',
     }
 
     EXTENSIONS = {
@@ -104,12 +111,21 @@ class PostgresTestUtil:
                 query = ';'.join('DROP SCHEMA %s CASCADE' % s for s in schemas)
                 connection.execute(query)
         except sa_exc.OperationalError:
-            # Handle psycopg2 OOM errors caused by large transactions by
-            # removing non-initial schemas one-by-one.
+            # Handle psycopg2 OOM errors caused by large transactions
+            # by removing tables in non-initial schemas one-by-one,
+            # then removing their empty schemas.
             with self.engine.connect() as connection:
                 rows = connection.execute('SELECT schema_name FROM information_schema.schemata')
                 schemas = {row['schema_name'] for row in rows} - self.INITIAL_SCHEMAS
                 for schema in schemas:
+                    info_query = ("""SELECT table_name FROM information_schema.tables
+                                  WHERE table_schema = '%s'
+                                  AND table_type = 'BASE TABLE';""" % schema)
+                    rows = connection.execute(info_query)
+                    tables = [row['table_name'] for row in rows]
+                    for table in tables:
+                        query = 'DROP TABLE IF EXISTS %s.%s CASCADE;' % (schema, table)
+                        connection.execute(query)
                     query = 'DROP SCHEMA %s CASCADE;' % schema
                     connection.execute(query)
 
@@ -169,7 +185,8 @@ class PostgresTestUtil:
                 msg = 'Table %s exists in schema %s' % (table, schema)
         assert not self._has_table(table, schema=schema, conn=conn), msg
 
-    def set_up_database(self, conn, source_tables, target_schema):
+    @with_connection
+    def set_up_database(self, source_tables, target_schema, *, conn=None):
         conn.execute('CREATE EXTENSION IF NOT EXISTS btree_gist')
         conn.execute('CREATE SCHEMA IF NOT EXISTS %s' % target_schema)
 
@@ -177,23 +194,30 @@ class PostgresTestUtil:
             conn.execute('CREATE SCHEMA IF NOT EXISTS %s' % table.schema)
             table.create(conn)
 
-    def load_prebuilt_schema(self, conn, schema_name):
-        schema_path = os.path.join('queries', 'schema', 'unit_tests')
+    @with_connection
+    def load_prebuilt_schema(self, schema_name, *, conn=None):
+        schema_path = os.path.join(REPO_BASE_DIR, 'testing_schemas')
         pattern = '*_' + schema_name + '.sql'
         sqlfile_glob = glob.glob(os.path.join(schema_path, pattern))
-        for sqlfile_name in sorted(sqlfile_glob):
+
+        sorted_filenames = sorted(sqlfile_glob,
+                                  key=lambda n: int(os.path.basename(n).split('_', 1)[0]))
+
+        for sqlfile_name in sorted_filenames:
             with open(sqlfile_name, 'r') as sqlfile:
                 with conn.begin():
                     conn.execute(sa.DDL(sqlfile.read()))
 
-    def run_transform_query(self, conn, query_filename):
+    @with_connection
+    def run_transform_query(self, query_filename, *, conn=None):
         # This is a weird hack to stay consistent with the way we use unittest.
-        # postgres_testcase.py lives inside the python/clover_analytics/tools directory, and all
+        # postgres_testcase.py lives inside the python/test_suite directory, and all
         # query filenames are given relative to that location. Thus, we reuse that location here.
         query_fq_filename = os.path.join(
-            os.path.dirname(__file__), 'python/clover_analytics/tools', query_filename)
+            os.path.dirname(__file__), 'test_suite', query_filename)
         with open(query_fq_filename, 'r') as query_file:
             conn.execute(sa.text(query_file.read()))
+
 
     def insert(self, table, values):
         self.connection.execute(sa.insert(table, values=values))
