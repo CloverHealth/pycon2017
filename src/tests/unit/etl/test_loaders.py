@@ -1,11 +1,10 @@
 import logging
 
 import pytest
-import sqlalchemy.orm as sa_orm
 import sqlalchemy.inspection as sa_inspection
+import sqlalchemy.orm as sa_orm
 
-from app import models
-from tests import factories
+from app import models, factories
 
 
 @pytest.fixture(scope='module')

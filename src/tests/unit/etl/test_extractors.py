@@ -2,16 +2,15 @@ import datetime
 
 import sqlalchemy.orm as sa_orm
 
-from app import models
-from tests import factories
+from app import models, factories
 
 
 def test_simple_submission_response(session: sa_orm.Session,
                                     extractor,
-                                    simple_form_schema: models.FormSchema,
+                                    simple_form: models.Form,
                                     simple_response_data: dict,
                                     user: models.User):
-    expected_submission = factories.SubmissionFactory(schema=simple_form_schema, user=user,
+    expected_submission = factories.SubmissionFactory(form=simple_form, user=user,
                                                       responses=simple_response_data)
     session.add(expected_submission)
     session.flush()
@@ -23,11 +22,10 @@ def test_simple_submission_response(session: sa_orm.Session,
     assert actual_submission == expected_submission
 
 
-def test_load_submission_range(submission_metrics, extractor):
+def test_load_submission_range(source_data, extractor):
     num_iterations = 0
     submission_ids = set()
-    form_type_ids = set()
-    schema_ids = set()
+    form_ids = set()
     user_ids = set()
     for extracted_submission in extractor():
         # basic sanity check
@@ -38,15 +36,13 @@ def test_load_submission_range(submission_metrics, extractor):
 
         # accumulate metrics while iterating
         submission_ids.add(extracted_submission.id)
-        schema_ids.add(extracted_submission.schema_id)
-        form_type_ids.add(extracted_submission.schema.form_type.id)
+        form_ids.add(extracted_submission.form_id)
         user_ids.add(extracted_submission.user_id)
         num_iterations += 1
 
     # verify metrics
     # TODO load back actual IDs from database??
-    assert num_iterations == submission_metrics.submissions
-    assert len(submission_ids) == submission_metrics.submissions
-    assert len(schema_ids) == submission_metrics.schemas
-    assert len(form_type_ids) == submission_metrics.form_types
-    assert len(user_ids) == submission_metrics.users
+    assert num_iterations == source_data.submissions
+    assert len(submission_ids) == source_data.submissions
+    assert len(form_ids) == source_data.forms
+    assert len(user_ids) == source_data.users

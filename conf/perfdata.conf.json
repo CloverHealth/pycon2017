@@ -1,0 +1,34 @@
+{
+  "empty": {
+    "schemas": [],
+    "metrics": {
+      "users": 0,
+      "forms": 0,
+      "submissions": 0
+    }
+  },
+  "basic": {
+    "schemas": ["general"],
+    "metrics": {
+      "users": 1,
+      "forms": 1,
+      "submissions": 1
+    }
+  },
+  "small_number": {
+    "schemas": ["general", "health_risk_assessment"],
+    "metrics": {
+      "users": 2,
+      "forms": 2,
+      "submissions": 20
+    }
+  },
+  "medium_number": {
+    "schemas": ["general", "health_risk_assessment", "scip"],
+    "metrics": {
+      "users": 2,
+      "forms": 2,
+      "submissions": 300
+    }
+  }
+}

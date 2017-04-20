@@ -1,0 +1,49 @@
+{
+  "naive-single": {
+    "extractor": {
+      "name": "naive_extractor"
+    },
+    "loader": {
+      "name": "naive_loader"
+    }
+  },
+
+  "naive-all": {
+    "extractor": {
+      "name": "naive_load_all_extractor"
+    },
+    "loader": {
+      "name": "naive_add_all_loader"
+    }
+  },
+
+  "small-chunks": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 5
+      }
+    },
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
+        "chunk_size": 5
+      }
+    }
+  },
+
+  "large-chunks": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 500
+      }
+    },
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
+        "chunk_size": 500
+      }
+    }
+  }
+}

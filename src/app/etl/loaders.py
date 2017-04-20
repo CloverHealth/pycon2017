@@ -26,7 +26,7 @@ def naive_loader(session: sa_orm.Session, events):
     return num_events
 
 
-def naive_all_loader(session: sa_orm.Session, events):
+def naive_add_all_loader(session: sa_orm.Session, events):
     # NOTE: Session.add_all() does not return a count, so we do not support metric logging here
     session.add_all(events)
     session.flush()

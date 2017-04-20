@@ -1,15 +1,11 @@
 import uuid
 
-from freezegun import freeze_time
 import pytest
-import sqlalchemy.exc as sa_exceptions
+from freezegun import freeze_time
 
-from app import constants
-
-
+from app import constants, factories
 from app import models
-from app.timestamp_utils import utc_now
-from tests import factories
+from app.util.timestamps import utc_now
 
 number = 1
 text = 2
@@ -38,56 +34,19 @@ def variant_answer(request):
     }
 
 
-def test_form_type_basic(form_type):
-    assert str(form_type) == 'FormType(name={})'.format(form_type.name)
-
-
-def test_schema_basic(session, form_type, simple_form_schema):
-    results = session.query(models.FormSchema).all()
+def test_form_basic(session, simple_form):
+    results = session.query(models.Form).all()
     assert len(results) == 1
 
     actual_schema = results[0]
-    assert str(actual_schema) == \
-           'FormSchema(type_name={}, version={})'.format(form_type.name, simple_form_schema.version)
-    assert actual_schema.data == simple_form_schema.data
-    assert actual_schema.version == 1
-    assert actual_schema.form_type == form_type
+    assert str(actual_schema) == 'Form(name={})'.format(simple_form.name)
+    assert actual_schema.schema == simple_form.schema
 
 
-def test_schema_unique_versions(session, form_type):
-    duplicate_versions = [
-        factories.FormSchemaFactory(form_type=form_type, version=1, data={}) for _ in range(2)
-    ]
-
-    session.add_all(duplicate_versions)
-    with pytest.raises(sa_exceptions.IntegrityError) as excinfo:
-        session.flush()
-
-    ex = excinfo.value
-    assert 'violates unique constraint' in str(ex)
-
-
-@pytest.mark.parametrize('invalid_version', [0, -1, -2, -10])
-def test_schema_version_constraint(session, form_type, invalid_version):
-    session.add(
-        factories.FormSchemaFactory(form_type=form_type, version=invalid_version, data={})
-    )
-
-    with pytest.raises(sa_exceptions.IntegrityError) as excinfo:
-        session.flush()
-
-    ex = excinfo.value
-    assert 'violates check constraint' in str(ex)
-
-
-def test_submission_timestamp(session, form_type, user):
-    schema = factories.FormSchemaFactory(form_type=form_type)
-    session.add(schema)
-    session.flush()
-
+def test_submission_timestamp(session, simple_form, user):
     now = utc_now()
     with freeze_time(now):
-        submission = factories.SubmissionFactory(schema=schema, user=user, responses={})
+        submission = factories.SubmissionFactory(form=simple_form, user=user, responses={})
         session.add(submission)
         session.flush()
 
@@ -95,18 +54,16 @@ def test_submission_timestamp(session, form_type, user):
     assert len(results) == 1
 
     actual_submission = results[0]
-    assert actual_submission.schema == schema
+    assert actual_submission.form == simple_form
     assert actual_submission.user == user
     assert actual_submission.date_created == now
     assert actual_submission.responses == {}
 
 
-def test_submission_answer_type(session, simple_form_schema, user, variant_answer):
+def test_submission_answer_type(session, simple_form, user, variant_answer):
     event = models.ResponseEvent(
-        form_type_id=simple_form_schema.form_type.id,
-        form_type_name=simple_form_schema.type_name,
-        schema_id=simple_form_schema.id,
-        schema_version=simple_form_schema.version,
+        form_id=simple_form.id,
+        form_name=simple_form.name,
         user_id=user.id,
         user_full_name=user.full_name,
         submission_id=uuid.uuid4(),

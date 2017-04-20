@@ -4,7 +4,7 @@ import sqlalchemy.orm as sa_orm
 from sqlalchemy.ext import declarative
 
 from app import constants
-from app.timestamp_utils import utc_now
+from app.util.timestamps import utc_now
 
 __all__ = [
     'init_database'
@@ -73,40 +73,13 @@ class DataWarehouseModel(BaseModel, PrimaryKeyUUIDMixin):
     )
 
 
-class FormType(ApplicationModel):
-    __tablename__ = 'form_types'
+class Form(ApplicationModel):
+    __tablename__ = 'form_schemas'
     __repr_details__ = ['name']
 
-    """
-    All versions of a form
-    """
     name = sa.Column(sa.Text(), nullable=False, unique=True, index=True)
     description = sa.Column(sa.Text(), nullable=False)
-
-
-class FormSchema(ApplicationModel):
-    """
-    Form questions and structure
-    """
-    __tablename__ = 'form_schema'
-    __repr_details__ = ['type_name', 'version']
-
-    form_type_id = sa.Column(sa.ForeignKey(FormType.id), nullable=False)
-    version = sa.Column(sa.Integer, nullable=False)
-    data = sa.Column(sa_pg.JSONB, nullable=False)
-
-    form_type = sa_orm.relationship(FormType)
-
-    @declarative.declared_attr
-    def __table_args__(cls):
-        return (
-            sa.UniqueConstraint('form_type_id', 'version'),
-            sa.CheckConstraint('version > 0'),
-        ) + ApplicationModel.__table_args__
-
-    @property
-    def type_name(self):
-        return self.form_type.name
+    schema = sa.Column(sa_pg.JSONB, nullable=False)
 
 
 class User(ApplicationModel):
@@ -130,12 +103,12 @@ class Submission(ApplicationModel):
     """
     __tablename__ = 'form_responses'
 
-    schema_id = sa.Column(sa.ForeignKey(FormSchema.id), nullable=False)
+    form_id = sa.Column(sa.ForeignKey(Form.id), nullable=False)
     user_id = sa.Column(sa.ForeignKey(User.id), nullable=False)
-    responses = sa.Column(sa_pg.JSON)
+    responses = sa.Column(sa_pg.JSON, nullable=False)
     date_created = sa.Column(sa.DateTime(timezone=True), default=utc_now, nullable=False)
 
-    schema = sa_orm.relationship(FormSchema)
+    form = sa_orm.relationship(Form)
     user = sa_orm.relationship(User)
 
 
@@ -150,10 +123,8 @@ class ResponseEvent(DataWarehouseModel):
     __tablename__ = 'response_events'
 
     # form schema information
-    form_type_id = sa.Column(sa_pg.UUID(as_uuid=True), nullable=False)  # FormType.id
-    form_type_name = sa.Column(sa.Text, nullable=False)  # FormType.name
-    schema_id = sa.Column(sa_pg.UUID(as_uuid=True), nullable=False)  # FormSchema.id
-    schema_version = sa.Column(sa.Integer, nullable=False)  # FormSchema.version
+    form_id = sa.Column(sa_pg.UUID(as_uuid=True), nullable=False)  # FormType.id
+    form_name = sa.Column(sa.Text, nullable=False)  # FormType.name
 
     # user information
     user_id = sa.Column(sa_pg.UUID(as_uuid=True), nullable=False)  # User.id

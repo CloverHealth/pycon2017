@@ -3,8 +3,7 @@ import functools
 import logging
 
 from app import models, constants
-from app.timestamp_utils import utc_now
-
+from app.util.timestamps import utc_now
 
 LOGGER = logging.getLogger(__name__)
 NODE_PATH_CACHE_SIZE = 16  # should be a power of 2
@@ -44,12 +43,12 @@ def _make_path_str(path: list) -> str:
     return '.'.join(path)
 
 
-def _load_node_path_map(session, schema_id) -> dict:
+def _load_node_path_map(session, form_id) -> dict:
     """
     Extracts a dictionary of node paths to AnswerTypes
 
     :param session: SQLAlchemy session
-    :param schem_id: FormSchema.id
+    :param form_id: Form.id
     :returns: dictionary of node path strings to AnswerType
     """
     def _answer_types(node: dict, path: list):
@@ -66,13 +65,13 @@ def _load_node_path_map(session, schema_id) -> dict:
                 if child_slug:
                     yield path + [child_slug], child
 
-    schema = session.query(models.FormSchema).get(schema_id)
-    return {path: answer_type for path, answer_type in map_nested(schema.data, _answer_types, _children)}
+    form = session.query(models.Form).get(form_id)
+    return {path: answer_type for path, answer_type in map_nested(form.schema, _answer_types, _children)}
 
 
 def get_node_path_map_cache(session):
     """
-    Returns an LRU cached function which provides a node path map for a form schema 
+    Returns an LRU cached function which provides a node path map for a form
 
     :param session: SQLAlchemy session
     :return: function which provides a node path map (see _make_node_path_map) when passed a FormSchema.id
@@ -81,8 +80,8 @@ def get_node_path_map_cache(session):
     # NOTE: This wrapped partial function is the equivalent of defining an inner function like so:
     #
     # @functools.lru_cache(maxsize=NODE_PATH_CACHE_SIZE)
-    # def _get_node_path_map(form_schema_id):
-    #     return _load_node_path_map(session, form_schema_id)
+    # def _get_node_path_map(form_id):
+    #     return _load_node_path_map(session, form_id)
 
     _get_node_path_map = functools.partial(_load_node_path_map, session)
     cached_wrapper = functools.lru_cache(maxsize=NODE_PATH_CACHE_SIZE)
@@ -111,16 +110,14 @@ def transform_submissions(session, submissions, processed_on:datetime.datetime=N
 def _transform_submission(f_get_node_path_map, submission: models.Submission, processed_on:datetime.datetime):
     common_kwargs = {
         'processed_on': processed_on,
-        'form_type_id': submission.schema.form_type_id,
-        'form_type_name': submission.schema.type_name,
-        'schema_id': submission.schema.id,
-        'schema_version': submission.schema.version,
+        'form_id': submission.form_id,
+        'form_name': submission.form.name,
         'user_id': submission.user.id,
         'user_full_name': submission.user.full_name,
         'submission_id': submission.id,
         'submission_created': submission.date_created
     }
-    node_map = f_get_node_path_map(submission.schema_id)
+    node_map = f_get_node_path_map(submission.form_id)
     for path, answer in _flatten_responses(submission.responses, node_map):
         yield models.ResponseEvent(
             schema_path=path,
