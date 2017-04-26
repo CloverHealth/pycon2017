@@ -20,7 +20,8 @@ def all_processor_configs(conf_path):
         'naive-single',
         'naive-all',
         'small-chunks',
-        'large-chunks'
+        'large-chunks-no-join',
+        'large-chunks-with-join'
     ]
 )
 def processor_config_name(request):

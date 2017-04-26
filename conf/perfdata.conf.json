@@ -30,5 +30,21 @@
       "forms": 2,
       "submissions": 300
     }
+  },
+  "fewer_users": {
+    "schemas": ["general"],
+    "metrics": {
+      "users": 20,
+      "forms": 1,
+      "submissions": 800
+    }
+  },
+  "many_users": {
+    "schemas": ["general"],
+    "metrics": {
+      "users": 200,
+      "forms": 1,
+      "submissions": 800
+    }
   }
 }

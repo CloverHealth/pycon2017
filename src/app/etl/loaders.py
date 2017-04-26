@@ -26,10 +26,22 @@ def naive_loader(session: sa_orm.Session, events):
     return num_events
 
 
+@log_metrics
 def naive_add_all_loader(session: sa_orm.Session, events):
-    # NOTE: Session.add_all() does not return a count, so we do not support metric logging here
-    session.add_all(events)
+    # Session.add_all() does not return a count
+    # so we wrap the events iterable with our own 'side_effect' iterator to count the number of events processed
+
+    num_events = 0
+
+    def _increment_num_events(_):
+        nonlocal num_events
+        num_events += 1
+
+    event_iterator = more_itertools.side_effect(_increment_num_events, events)
+
+    session.add_all(event_iterator)
     session.flush()
+    return num_events
 
 
 @log_metrics

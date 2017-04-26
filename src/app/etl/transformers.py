@@ -111,11 +111,17 @@ def _transform_submission(f_get_node_path_map, submission: models.Submission, pr
     common_kwargs = {
         'processed_on': processed_on,
         'form_id': submission.form_id,
+
+        # TODO do we also force joined loads on this specific column too?
         'form_name': submission.form.name,
+
+        'submission_id': submission.id,
+        'submission_created': submission.date_created,
+
+        # by default, accessing the 'user' relationship property will require a separate query to the 'users' table
+        # if there is a cache miss.  This can be prevented with the 'joined_load' in the extractor
         'user_id': submission.user.id,
         'user_full_name': submission.user.full_name,
-        'submission_id': submission.id,
-        'submission_created': submission.date_created
     }
     node_map = f_get_node_path_map(submission.form_id)
     for path, answer in _flatten_responses(submission.responses, node_map):

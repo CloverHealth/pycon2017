@@ -10,8 +10,11 @@ __pycache__/
 # pytest artifacts
 .cache/
 
-# ETL test suite artifacts
-.test_database/
+# unit test suite artifacts
+.test_db/
+
+# perf test artifacts (default)
+.perf_dbs/
 
 # Jupyter Notebook artifacts
 .ipynb_checkpoints/

@@ -8,7 +8,10 @@ import sqlalchemy.orm as sa_orm
 import testing.postgresql
 
 from app import models
-from tests import constants
+
+
+# re-useable test database subdirectory
+KEEPDB_PATH = '.test_db'
 
 # Test database options
 DatabaseConfig = namedtuple(
@@ -27,7 +30,7 @@ def db_options(request, root_path:str) -> DatabaseConfig:
     keepdb_active = request.config.getoption('--keepdb')
 
     if keepdb_active:
-        keepdb_path = os.path.join(root_path, constants.KEEPDB_PATH)
+        keepdb_path = os.path.join(root_path, KEEPDB_PATH)
     else:
         keepdb_path = None
 

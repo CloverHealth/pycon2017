@@ -47,6 +47,10 @@ def setup_logging(sql_logging=False):
                 'level': 'INFO',
                 'handlers': ['console']
             },
+            '__main__': {
+                'level': 'INFO',
+                'handlers': ['console']
+            }
         }
     }
 

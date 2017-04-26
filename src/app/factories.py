@@ -143,7 +143,7 @@ def make_source_data(session: sa_orm.Session, metrics: SourceDataMetrics, availa
     session.flush()
 
 
-def make_processor(session: sa_orm.Session, processor_config: dict):
+def make_processor(session: sa_orm.Session, processor_config: dict, use_memory_profiler:bool=False):
     """
     Factory method to create a processor using partial function
 
@@ -161,7 +161,12 @@ def make_processor(session: sa_orm.Session, processor_config: dict):
 
     transformer = functools.partial(transformers.transform_submissions, session)
 
-    return functools.partial(processor.process, extractor, transformer, loader)
+    processor_func = processor.process
+    if use_memory_profiler:
+        from memory_profiler import profile
+        processor_func = profile(processor_func)
+
+    return functools.partial(processor_func, extractor, transformer, loader)
 
 
 def make_response(get_node_path_map, form_id):

@@ -83,16 +83,16 @@ def mock_logger(monkeypatch):
 
 
 ExtractorParams = namedtuple('ExtractorParams', ['func', 'kwargs'])
-LoaderParams = namedtuple('LoaderParams', ['func', 'kwargs', 'check_logs'])
+LoaderParams = namedtuple('LoaderParams', ['func', 'kwargs'])
 
 
 @pytest.fixture(
     params=[
-        LoaderParams(loaders.naive_loader, {}, True),
-        LoaderParams(loaders.naive_add_all_loader, {}, False),
+        LoaderParams(loaders.naive_loader, {}),
+        LoaderParams(loaders.naive_add_all_loader, {}),
         # NOTE: 'return_defaults' must be set to True for regression tests, but not for normal execution
-        LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 2}, True),
-        LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 10}, True)
+        LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 2}),
+        LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 10})
     ],
     ids=[
         'naive_iterator',
@@ -112,13 +112,15 @@ def loader(session: sa_orm.Session, loader_params):
 
 @pytest.fixture(
     params=[
-        ExtractorParams(extractors.naive_extractor, {}),
-        ExtractorParams(extractors.naive_load_all_extractor, {}),
-        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 2}),
-        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 10}),
+        ExtractorParams(extractors.naive_extractor, {'joined_load': False}),
+        ExtractorParams(extractors.naive_extractor, {'joined_load': True}),
+        ExtractorParams(extractors.naive_load_all_extractor, {'joined_load': True}),
+        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 2, 'joined_load': True}),
+        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 10, 'joined_load': True}),
     ],
     ids=[
-        'naive_iterator',
+        'naive_iterator-no-join',
+        'naive_iterator-with-join',
         'naive_load_all',
         'chunked_2',
         'chunked_10'

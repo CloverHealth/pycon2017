@@ -20,7 +20,7 @@ def comparable_properties():
     10,
     100
 ])
-def test_loader_insertion(session: sa_orm.Session, loader_params, loader,
+def test_loader_insertion(session: sa_orm.Session, loader,
                           comparable_properties, num_events, mock_logger):
     expected_events = factories.ResponseEventFactory.build_batch(num_events)
     loader(expected_events)
@@ -42,10 +42,9 @@ def test_loader_insertion(session: sa_orm.Session, loader_params, loader,
             assert getattr(actual_event, k) == getattr(expected_event, k)
 
     # verify the aggregate summary log record
-    if loader_params.check_logs:
-        assert len(mock_logger.messages) == 1
-        summary_record = mock_logger.messages[0]
-        assert summary_record.level == logging.INFO
-        assert summary_record.msg == 'Inserted %d response events into database'
-        assert summary_record.args
-        assert summary_record.args[0] == num_events
+    assert len(mock_logger.messages) == 1
+    summary_record = mock_logger.messages[0]
+    assert summary_record.level == logging.INFO
+    assert summary_record.msg == 'Inserted %d response events into database'
+    assert summary_record.args
+    assert summary_record.args[0] == num_events

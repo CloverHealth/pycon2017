@@ -11,5 +11,9 @@ pytest==3.0.7
 testing.postgresql==1.3.0
 
 # additional dev requirements
+gprof2dot==2016.10.13
+memory_profiler==0.45
+psutil==5.2.2
 sqlparse==0.2.0
+matplotlib
 jupyter

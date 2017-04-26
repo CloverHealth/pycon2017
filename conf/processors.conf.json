@@ -1,7 +1,10 @@
 {
   "naive-single": {
     "extractor": {
-      "name": "naive_extractor"
+      "name": "naive_extractor",
+      "kwargs": {
+        "joined_load": true
+      }
     },
     "loader": {
       "name": "naive_loader"
@@ -10,7 +13,10 @@
 
   "naive-all": {
     "extractor": {
-      "name": "naive_load_all_extractor"
+      "name": "naive_load_all_extractor",
+      "kwargs": {
+        "joined_load": true
+      }
     },
     "loader": {
       "name": "naive_add_all_loader"
@@ -21,7 +27,8 @@
     "extractor": {
       "name": "chunked_extractor",
       "kwargs": {
-        "chunk_size": 5
+        "chunk_size": 5,
+        "joined_load": true
       }
     },
     "loader": {
@@ -31,12 +38,27 @@
       }
     }
   },
-
-  "large-chunks": {
+  "large-chunks-no-join": {
     "extractor": {
       "name": "chunked_extractor",
       "kwargs": {
+        "chunk_size": 500,
+        "joined_load": false
+      }
+    },
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
         "chunk_size": 500
+      }
+    }
+  },
+  "large-chunks-with-join": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 500,
+        "joined_load": true
       }
     },
     "loader": {
