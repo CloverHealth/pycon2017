@@ -8,13 +8,18 @@
 
 ## Setup
 
-Run the following:
+We recommend using a pyenv environment
+
+    pyenv virtualenv 3.5.3 clover-pycon
+    pyenv local clover-pycon
+
+Then run the following to install your packages:
 
     pip install -r requirements.txt
     
 ## Running tests
 
-To run tests normally:
+To run the unit tests normally:
 
     pytest src/tests/
 
@@ -37,13 +42,7 @@ When your finished or if the model schema has changed, just run the following
 
 1. Edit `conf/perfdata.conf.json` to describe the data you want as a scenario (e.g. named `myscenario`).
 
-2. Generate your scenarios
-
-To create all scenarios, run the following
-
-    python src/main.py generate
-
-To generate only a single scenario (e.g. `myscenario`), just run:
+2. Generate a single scenarios (e.g. `myscenario`) as follows:
 
     python src/main.py generate myscenario
 
@@ -61,7 +60,7 @@ Run the following:
 
 If you need to see what SQLAlchemy is sending to Postgres for making optimization queries, do the following:
 
-    python src/main.py --debug-sql process . . . 2>sql.log
+    python src/main.py --debug-sql process . . . >sql.log
     cat sql.log
 
 #### Profiling for timing

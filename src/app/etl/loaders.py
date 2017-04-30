@@ -27,6 +27,16 @@ def naive_loader(session: sa_orm.Session, events):
 
 
 @log_metrics
+def individual_flush_loader(session: sa_orm.Session, events):
+    num_events = 0
+    for event in events:
+        session.add(event)
+        session.flush([event])
+        num_events += 1
+    return num_events
+
+
+@log_metrics
 def naive_add_all_loader(session: sa_orm.Session, events):
     # Session.add_all() does not return a count
     # so we wrap the events iterable with our own 'side_effect' iterator to count the number of events processed

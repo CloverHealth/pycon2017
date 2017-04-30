@@ -90,6 +90,7 @@ LoaderParams = namedtuple('LoaderParams', ['func', 'kwargs'])
     params=[
         LoaderParams(loaders.naive_loader, {}),
         LoaderParams(loaders.naive_add_all_loader, {}),
+        LoaderParams(loaders.individual_flush_loader, {}),
         # NOTE: 'return_defaults' must be set to True for regression tests, but not for normal execution
         LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 2}),
         LoaderParams(loaders.chunked_bulk_save_objects_loader, {'return_defaults': True, 'chunk_size': 10})
@@ -97,6 +98,7 @@ LoaderParams = namedtuple('LoaderParams', ['func', 'kwargs'])
     ids=[
         'naive_iterator',
         'naive_insert_all',
+        'individual_flush_loader',
         'chunked_bulk_save_objects_2',
         'chunked_bulk_save_objects_10'
     ]

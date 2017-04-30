@@ -148,7 +148,7 @@ if __name__ == '__main__':
     process_command.add_argument('scenario_name', help='Scenario name', type=str, metavar='scenario')
     process_command.add_argument('config_name', help='Name for processor configuration', type=str)
 
-    clean_command = subparsers.add_parser('clean', help='Removes all perf test data')
+    subparsers.add_parser('clean', help='Removes all perf test data')
 
     args = parser.parse_args()
 

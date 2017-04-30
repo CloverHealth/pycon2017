@@ -23,6 +23,17 @@
     }
   },
 
+  "load-single-flush-single": {
+    "extractor": {
+      "name": "naive_extractor",
+      "kwargs": {
+        "joined_load": true
+      }
+    },
+    "loader": {
+      "name": "individual_flush_loader"
+    }
+  },
   "small-chunks": {
     "extractor": {
       "name": "chunked_extractor",

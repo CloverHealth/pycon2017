@@ -9,6 +9,24 @@ LOGGER = logging.getLogger(__name__)
 NODE_PATH_CACHE_SIZE = 16  # should be a power of 2
 
 
+def transform_submissions(session, submissions, processed_on:datetime.datetime=None):
+    """
+    Transforms Submissions into ResponseEvents
+
+    :param session: SQLAlchemy session
+    :param submissions: submissions generator
+    :param processed_on: optional timestamp to apply to 'processed_on' column of all ResponseEvents
+    :return: generator of ResponseEvents
+    """
+    processed_on = processed_on or utc_now()
+    get_node_path_map = get_node_path_map_cache(session)
+    num_submissions = 0
+    for submission in submissions:
+        yield from _transform_submission(get_node_path_map, submission, processed_on)
+        num_submissions += 1
+    LOGGER.info('Transformed %d JSON submissions', num_submissions)
+
+
 def map_nested(node:dict, gen_items, gen_children):
     """
     Recursively transforms a nested python dictionary into a generator of items
@@ -87,24 +105,6 @@ def get_node_path_map_cache(session):
     cached_wrapper = functools.lru_cache(maxsize=NODE_PATH_CACHE_SIZE)
 
     return cached_wrapper(_get_node_path_map)
-
-
-def transform_submissions(session, submissions, processed_on:datetime.datetime=None):
-    """
-    Transforms Submissions into ResponseEvents
-
-    :param session: SQLAlchemy session
-    :param submissions: submissions generator
-    :param processed_on: optional timestamp to apply to 'processed_on' column of all ResponseEvents
-    :return: generator of ResponseEvents
-    """
-    processed_on = processed_on or utc_now()
-    get_node_path_map = get_node_path_map_cache(session)
-    num_submissions = 0
-    for submission in submissions:
-        yield from _transform_submission(get_node_path_map, submission, processed_on)
-        num_submissions += 1
-    LOGGER.info('Transformed %d JSON submissions', num_submissions)
 
 
 def _transform_submission(f_get_node_path_map, submission: models.Submission, processed_on:datetime.datetime):
