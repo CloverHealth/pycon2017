@@ -1,7 +1,11 @@
+jupyter
+matplotlib
 names==0.3.0
 numpy==1.12.1
 pandas==0.19.2
 psycopg2==2.7.1
 pytest==3.0.7
 SQLAlchemy==1.1.9
-testing.postgresql
+sqlparse==0.2.0
+statsmodels==0.8.0
+testing.postgresql==1.3.0
