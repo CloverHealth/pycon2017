@@ -2,6 +2,7 @@ import logging
 
 import more_itertools
 import sqlalchemy.orm as sa_orm
+from app import models
 
 
 LOGGER = logging.getLogger(__name__)
@@ -65,4 +66,14 @@ def chunked_bulk_save_objects_loader(session: sa_orm.Session, events, chunk_size
         session.bulk_save_objects(batch, return_defaults=return_defaults)
     return num_events
 
-# TODO test with chunked loader Session.bulk_insert_mappings()
+
+@log_metrics
+def chunked_bulk_insert_mappings(session: sa_orm.Session, events, chunk_size=None, return_defaults=False):
+    assert chunk_size
+
+    num_events = 0
+    batches = more_itertools.chunked(events, chunk_size)
+    for batch in batches:
+        num_events += len(batch)
+        session.bulk_insert_mappings(models.ResponseEvent, batch, return_defaults=return_defaults)
+    return num_events

@@ -110,7 +110,7 @@ def _verify_logged_metrics(mock_logger, expected_submissions_processed):
     assert summary_record.args[0] == expected_submissions_processed
 
 
-def test_json_transform(session, raw_data, transformer, mock_logger):
+def test_json_transform_to_model(session, raw_data, transformer, mock_logger):
     timestamp_submission = utc_now()
     with freeze_time(timestamp_submission):
         form = factories.FormFactory(schema=raw_data.schema)
@@ -151,6 +151,46 @@ def test_json_transform(session, raw_data, transformer, mock_logger):
     assert sorted_actual_events == raw_data.events
 
     _verify_logged_metrics(mock_logger, 1)
+
+
+def test_json_transform_to_dict(session, raw_data, transformer):
+    timestamp_submission = utc_now()
+    with freeze_time(timestamp_submission):
+        form = factories.FormFactory(schema=raw_data.schema)
+        submission = factories.SubmissionFactory(form=form, responses=raw_data.responses)
+        session.add_all([form, submission])
+        session.flush()
+
+    timestamp_transformation = utc_now()
+    with freeze_time(timestamp_transformation):
+        # TODO remove explicit processed_on to verify default
+        results = transformer([submission], processed_on=timestamp_transformation, to_dict=True)
+
+    assert results
+    assert isinstance(results, types.GeneratorType)
+
+    results = list(results)
+    assert len(results) == len(raw_data.events)
+
+    # verify all standard fields
+    for actual_event in results:
+        assert isinstance(actual_event, dict)
+        assert actual_event['form_id'] == form.id
+        assert actual_event['form_name'] == form.name
+
+        assert actual_event['user_id'] == submission.user.id
+        assert actual_event['user_full_name'] == submission.user.full_name
+
+        assert actual_event['submission_id'] == submission.id
+        assert actual_event['submission_created'] == timestamp_submission
+
+        assert actual_event['processed_on'] == timestamp_transformation
+
+    sorted_actual_events = sorted(
+        ({'schema_path': e['schema_path'], 'value': e['value'], 'answer_type': e['answer_type']} for e in results),
+        key=lambda e: e['schema_path']
+    )
+    assert sorted_actual_events == raw_data.events
 
 
 @pytest.mark.parametrize('num_responses_with_same_schema', [

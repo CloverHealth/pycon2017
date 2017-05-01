@@ -15,7 +15,7 @@
       "submissions": 1
     }
   },
-  "small_number": {
+  "small": {
     "schemas": ["general", "health_risk_assessment"],
     "metrics": {
       "users": 2,
@@ -23,7 +23,7 @@
       "submissions": 20
     }
   },
-  "medium_number": {
+  "medium": {
     "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
       "users": 2,
@@ -31,20 +31,20 @@
       "submissions": 300
     }
   },
-  "fewer_users": {
-    "schemas": ["general"],
+  "large-few-users": {
+    "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
       "users": 20,
       "forms": 1,
-      "submissions": 800
+      "submissions": 2400
     }
   },
-  "many_users": {
-    "schemas": ["general"],
+  "large-many-users": {
+    "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
-      "users": 200,
+      "users": 400,
       "forms": 1,
-      "submissions": 800
+      "submissions": 2400
     }
   }
 }

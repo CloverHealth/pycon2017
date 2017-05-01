@@ -125,6 +125,7 @@ def make_source_data(session: sa_orm.Session, metrics: SourceDataMetrics, availa
     # create all the users
     users = UserFactory.build_batch(metrics.users)
     session.add_all(users)
+    session.flush()
 
     # use the node path map cache to generate submission responses JSON
     get_node_path_map = transformers.get_node_path_map_cache(session)
@@ -137,9 +138,7 @@ def make_source_data(session: sa_orm.Session, metrics: SourceDataMetrics, availa
         form=factory.Iterator(forms, cycle=True),
         user=factory.Iterator(users, cycle=True),
     )
-    # TODO this will get very slow unless we use chunking
     session.add_all(submissions)
-
     session.flush()
 
 
@@ -159,7 +158,8 @@ def make_processor(session: sa_orm.Session, processor_config: dict, use_memory_p
     loader_func = getattr(loaders, loader_config['name'])
     loader = functools.partial(loader_func, session, **loader_config.get('kwargs', {}))
 
-    transformer = functools.partial(transformers.transform_submissions, session)
+    transformer_config = processor_config['transformer']
+    transformer = functools.partial(transformers.transform_submissions, session, **transformer_config)
 
     processor_func = processor.process
     if use_memory_profiler:

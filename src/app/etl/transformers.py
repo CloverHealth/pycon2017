@@ -9,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 NODE_PATH_CACHE_SIZE = 16  # should be a power of 2
 
 
-def transform_submissions(session, submissions, processed_on:datetime.datetime=None):
+def transform_submissions(session, submissions, processed_on:datetime.datetime=None, to_dict=False):
     """
     Transforms Submissions into ResponseEvents
 
@@ -22,7 +22,7 @@ def transform_submissions(session, submissions, processed_on:datetime.datetime=N
     get_node_path_map = get_node_path_map_cache(session)
     num_submissions = 0
     for submission in submissions:
-        yield from _transform_submission(get_node_path_map, submission, processed_on)
+        yield from _transform_submission(get_node_path_map, submission, processed_on, to_dict)
         num_submissions += 1
     LOGGER.info('Transformed %d JSON submissions', num_submissions)
 
@@ -107,7 +107,18 @@ def get_node_path_map_cache(session):
     return cached_wrapper(_get_node_path_map)
 
 
-def _transform_submission(f_get_node_path_map, submission: models.Submission, processed_on:datetime.datetime):
+def _make_output_dictionary(value=None, answer_type=None, **kwargs):
+    return {
+        'value': str(value),
+        'answer_type': answer_type.name,
+        **kwargs
+    }
+
+
+def _transform_submission(f_get_node_path_map,
+                          submission: models.Submission,
+                          processed_on:datetime.datetime,
+                          to_dict:bool):
     common_kwargs = {
         'processed_on': processed_on,
         'form_id': submission.form_id,
@@ -124,8 +135,13 @@ def _transform_submission(f_get_node_path_map, submission: models.Submission, pr
         'user_full_name': submission.user.full_name,
     }
     node_map = f_get_node_path_map(submission.form_id)
+    if to_dict:
+        output_mapper = _make_output_dictionary
+    else:
+        output_mapper = models.ResponseEvent
+
     for path, answer in _flatten_responses(submission.responses, node_map):
-        yield models.ResponseEvent(
+        yield output_mapper(
             schema_path=path,
             value=answer['value'],
             answer_type=answer['answer_type'],
