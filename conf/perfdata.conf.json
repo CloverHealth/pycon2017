@@ -27,7 +27,7 @@
     "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
       "users": 2,
-      "forms": 2,
+      "forms": 3,
       "submissions": 300
     }
   },
@@ -35,7 +35,7 @@
     "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
       "users": 20,
-      "forms": 1,
+      "forms": 3,
       "submissions": 2400
     }
   },
@@ -43,7 +43,7 @@
     "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {
       "users": 400,
-      "forms": 1,
+      "forms": 3,
       "submissions": 2400
     }
   }

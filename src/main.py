@@ -1,17 +1,17 @@
 import argparse
 import contextlib
-import enum
 import logging
 import os
 import shutil
+import subprocess
 import sys
 import time
 
 import sqlalchemy as sa
 import sqlalchemy.orm as sa_orm
-import testing.postgresql
 
 from app import models, constants, factories
+from app import db as perf_db
 from app.util.json import load_json_file
 from app.logs import setup_logging
 
@@ -19,56 +19,23 @@ from app.logs import setup_logging
 LOGGER = logging.getLogger(__name__)
 
 
-class PerfSessionType(enum.Enum):
-    create_scenario = 1
-    copy_scenario = 2
-
-MAX_DATA_DIR_PATH_LEN = 70
-
-
 @contextlib.contextmanager
-def make_perf_session(root_data_dir:str, scenario_name:str, session_type:PerfSessionType)-> sa_orm.Session:
-    # limit the length of the data directory root due to length limitations of UNIX socket names
-    if len(root_data_dir) > MAX_DATA_DIR_PATH_LEN:
-        LOGGER.error('Root data directory path length is too long: %s', root_data_dir)
-        LOGGER.error('Please select a different path using the --data-dir option')
-        raise RuntimeError('Root data directory path too long')
+def make_perf_session(test_db)-> sa_orm.Session:
+    db = None
+    session = None
+    try:
+        db_url = test_db.url()
+        db = sa.create_engine(db_url)
+        sessionmaker = sa_orm.sessionmaker(db)
+        session = sessionmaker()
 
-    source_db_data_path = os.path.join(root_data_dir, 'templates', scenario_name)
+        yield session
 
-    # if creating a new scenario, regenerate the template directory
-    if session_type == PerfSessionType.create_scenario:
-        shutil.rmtree(source_db_data_path, ignore_errors=True)
-        os.makedirs(source_db_data_path)
-        session_db_data_path = source_db_data_path
-    # otherwise, copy from the template directory
-    else:
-        if not os.path.exists(source_db_data_path):
-            LOGGER.error("You need to generate scenario '%s' first", scenario_name)
-            raise RuntimeError('Template directory missing')
-
-        session_db_data_path = os.path.join(root_data_dir, 'test_runs', scenario_name)
-
-        LOGGER.info("Copying scenario '%s' from template", scenario_name)
-        shutil.rmtree(session_db_data_path, ignore_errors=True)
-        shutil.copytree(source_db_data_path, session_db_data_path)
-
-    with testing.postgresql.Postgresql(base_dir=session_db_data_path) as postgresql:
-        db = None
-        try:
-            db_url = postgresql.url()
-            db = sa.create_engine(db_url)
-            if session_type == PerfSessionType.create_scenario:
-                LOGGER.info('Creating database schema')
-                models.init_database(db)
-            sessionmaker = sa_orm.sessionmaker(db)
-            session = sessionmaker()
-
-            yield session
-
-        finally:
-            if db:
-                db.dispose()
+    finally:
+        if session:
+            session.close()
+        if db:
+            db.dispose()
 
 
 def generate_data(session:sa_orm.Session, scenario_name:dict,
@@ -85,9 +52,14 @@ def generate_data(session:sa_orm.Session, scenario_name:dict,
         schema_filename = os.path.join(conf_dir, 'schemas', schema_name + '.json')
         schemas.append(load_json_file(schema_filename))
 
+    LOGGER.info('Creating database schema')
+    models.init_database(session.connection())
+
     # generate the data
     LOGGER.info('Generating data')
     factories.make_source_data(session, metrics, schemas)
+
+    session.commit()
 
 
 def process_data(session:sa_orm.Session, config_name:str, use_memory_profiler:bool,
@@ -101,6 +73,14 @@ def process_data(session:sa_orm.Session, config_name:str, use_memory_profiler:bo
         LOGGER.warning('NOTE: Using memory profiler instruments code and will result in slower runtime')
     processor()
 
+    session.commit()
+
+
+def review_data(db_url:str):
+    # open a separate psql client to the existing database
+    run_args = ['psql', db_url]
+    subprocess.run(run_args)
+
 
 def main(args):
     if args.command == 'clean':
@@ -110,23 +90,39 @@ def main(args):
 
     setup_logging(sql_logging=args.sql_logging)
 
-    session_type = PerfSessionType.create_scenario if args.command == 'generate' else PerfSessionType.copy_scenario
+    perf_db_kwargs = {
+        'root_dir': args.data_dir,
+        'scenario_name': args.scenario_name
+    }
+    if args.command == 'generate':
+        perf_db_kwargs['db_type'] = perf_db.DatabaseType.template
+    else:
+        perf_db_kwargs['db_type'] = perf_db.DatabaseType.test_run
 
-    with make_perf_session(args.data_dir, args.scenario_name, session_type) as session:
-        # start the timer
-        # NOTE: we do not included database connection and initialization in our timing measurements
-        start_counter = time.perf_counter()
+    if args.command == 'process':
+        perf_db_kwargs['copy_from_template'] = True
 
-        if args.command == 'generate':
-            generate_data(session, args.scenario_name)
-        elif args.command == 'process':
-            process_data(session, args.config_name, args.profile_mem)
+    show_elapsed_time = True
+    if args.command == 'psql':
+        show_elapsed_time = False
 
-        session.commit()
+    with perf_db.PerfTestDatabase(**perf_db_kwargs) as postgresql:
+        with make_perf_session(postgresql) as session:
+            # start the timer
+            # NOTE: we do not included database connection and initialization in our timing measurements
+            start_counter = time.perf_counter()
 
-        # stop the counter and log the elapsed time
-        end_counter = time.perf_counter()
-        LOGGER.info('Elapsed time (seconds): %s', '{:.03f}'.format(end_counter - start_counter))
+            if args.command == 'generate':
+                generate_data(session, args.scenario_name)
+            elif args.command == 'process':
+                process_data(session, args.config_name, args.profile_mem)
+            elif args.command == 'psql':
+                review_data(postgresql.url())
+
+            # stop the counter and log the elapsed time
+            end_counter = time.perf_counter()
+            if show_elapsed_time:
+                LOGGER.info('Elapsed time (seconds): %s', '{:.03f}'.format(end_counter - start_counter))
 
 
 if __name__ == '__main__':
@@ -149,6 +145,9 @@ if __name__ == '__main__':
     process_command.add_argument('config_name', help='Name for processor configuration', type=str)
 
     subparsers.add_parser('clean', help='Removes all perf test data')
+
+    psql_command = subparsers.add_parser('psql', help='Connect to processed database using psql')
+    psql_command.add_argument('scenario_name', help='Scenario name', type=str, metavar='scenario')
 
     args = parser.parse_args()
 

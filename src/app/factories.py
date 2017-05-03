@@ -7,6 +7,7 @@ from collections import namedtuple
 import factory
 import sqlalchemy.orm as sa_orm
 from faker import Faker
+import more_itertools
 
 from app import models, constants, processor
 from app.etl import extractors, transformers, loaders
@@ -80,6 +81,14 @@ class SubmissionFactory(factory.Factory):
     def responses(self):
         return self.f_make_response(self.form.id) if self.f_make_response else None
 
+    @factory.lazy_attribute
+    def form_id(self):
+        return self.form.id
+
+    @factory.lazy_attribute
+    def user_id(self):
+        return self.user.id
+
 
 class ResponseEventFactory(factory.Factory):
     class Meta:
@@ -131,14 +140,23 @@ def make_source_data(session: sa_orm.Session, metrics: SourceDataMetrics, availa
     get_node_path_map = transformers.get_node_path_map_cache(session)
     _cached_make_response = functools.partial(make_response, get_node_path_map)
 
-    # create all the submissions
-    submissions = SubmissionFactory.build_batch(
-        metrics.submissions,
+    # Create all the submissions
+    #
+    # To support building a very large number of submissions, we avoid using factory_boy.Factory.build_batch()
+    # because it constructs all instances at once in memory as a list
+    #
+    # Instead, we us a generator and insert 500 instances at a time
+
+    submission_factory = functools.partial(
+        SubmissionFactory,
         f_make_response=_cached_make_response,
         form=factory.Iterator(forms, cycle=True),
         user=factory.Iterator(users, cycle=True),
     )
-    session.add_all(submissions)
+    submissions_generator = (submission_factory() for _ in range(metrics.submissions))
+    for chunk in more_itertools.chunked(submissions_generator, 500):
+        session.bulk_save_objects(chunk)
+
     session.flush()
 
 

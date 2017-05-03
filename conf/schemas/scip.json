@@ -101,13 +101,13 @@
         },
         {
           "slug": "primary_phone",
-          "answerType": "phone",
+          "answerType": "text",
           "label": "Primary phone",
           "nodeType": "question"
         },
         {
           "slug": "secondary_phone",
-          "answerType": "phone",
+          "answerType": "text",
           "label": "Secondary phone",
           "nodeType": "question",
           "widget": "text"
@@ -124,7 +124,7 @@
           "nodeType": "question",
           "widget": "text",
           "slug": "email",
-          "answerType": "email",
+          "answerType": "text",
           "show": {
             "ruleType": "tree",
             "rule": {
@@ -296,16 +296,6 @@
           "nodeType": "question"
         },
         {
-          "slug": "clover_staff_present",
-          "label": "Clover staff present",
-          "nodeType": "question",
-          "widget": "multiSelectAsync",
-          "answerSource": {
-            "source": "staff"
-          },
-          "answerType": "numberArray"
-        },
-        {
           "label": "Who was this visit completed with?",
           "nodeType": "question",
           "widget": "radios",
@@ -434,7 +424,7 @@
             },
             {
               "slug": "phone_number",
-              "answerType": "phone",
+              "answerType": "text",
               "label": "Phone number",
               "nodeType": "question"
             }
