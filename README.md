@@ -46,6 +46,11 @@ When your finished or if the model schema has changed, just run the following
 
     python src/main.py generate myscenario
 
+You can then connect to the database to review your results as follows:
+
+    python src/main.py psql myscenario
+
+
 ## Performance testing
 
 1. Edit `conf/processors.conf.json` to select how you want to process your data (e.g. use named configuration `large-chunks`)
