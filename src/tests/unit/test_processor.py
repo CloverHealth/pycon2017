@@ -24,7 +24,7 @@ def all_processor_configs(conf_path):
         'chunked-objects-small',
         'chunked-objects-no-join',
         'chunked-objects-with-join',
-        'chunked-mappings-with-join'
+        'chunked-mappings'
     ]
 )
 def processor_config_name(request):

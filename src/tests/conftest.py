@@ -81,7 +81,7 @@ def session(db_engine: sa_engine.Engine):
     
     :param db_engine: test database connectivity instance 
     """
-    sessionmaker = sa.orm.sessionmaker(db_engine)
+    sessionmaker = sa_orm.sessionmaker(db_engine)
 
     # session is automatically rolled back regardless of test result
     # if an uncaught exception occurred, ensure it is still propagated to pytest with the original traceback

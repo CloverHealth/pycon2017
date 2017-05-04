@@ -52,11 +52,11 @@ def generate_data(session:sa_orm.Session, scenario_name:dict,
         schema_filename = os.path.join(conf_dir, 'schemas', schema_name + '.json')
         schemas.append(load_json_file(schema_filename))
 
-    LOGGER.info('Creating database schema')
+    LOGGER.info('Creating database schema...')
     models.init_database(session.connection())
 
     # generate the data
-    LOGGER.info('Generating data')
+    LOGGER.info('Generating data...')
     factories.make_source_data(session, metrics, schemas)
 
     session.commit()
@@ -71,6 +71,7 @@ def process_data(session:sa_orm.Session, config_name:str, use_memory_profiler:bo
     # run the processor
     if use_memory_profiler:
         LOGGER.warning('NOTE: Using memory profiler instruments code and will result in slower runtime')
+    LOGGER.info('Processing...')
     processor()
 
     session.commit()
@@ -82,10 +83,14 @@ def review_data(db_url:str):
     subprocess.run(run_args)
 
 
+def remove_data(data_dir:str):
+    LOGGER.info('Removing perf data directory')
+    shutil.rmtree(data_dir, ignore_errors=True)
+
+
 def main(args):
     if args.command == 'clean':
-        LOGGER.info('Removing perf data directory')
-        shutil.rmtree(args.data_dir, ignore_errors=True)
+        remove_data(args.data_dir)
         return
 
     setup_logging(sql_logging=args.sql_logging)

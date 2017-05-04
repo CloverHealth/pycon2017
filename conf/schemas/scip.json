@@ -27,7 +27,7 @@
           "nodeType": "question",
           "slug": "cpid",
           "answerType": "text",
-          "cloverKey": "member_cpid",
+          "tag": "member_cpid",
           "viewOnly": true
         },
         {
@@ -152,7 +152,7 @@
               "widget": "checkbox",
               "slug": "pre_paid_phone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_mobile_prepaid"
+              "tag": "member_uses_mobile_prepaid"
             },
             {
               "label": "Non-smartphone",
@@ -160,7 +160,7 @@
               "widget": "checkbox",
               "slug": "non_smartphone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_mobile_nonsmart"
+              "tag": "member_uses_mobile_nonsmart"
             },
             {
               "label": "iPhone or Android smartphone",
@@ -168,7 +168,7 @@
               "widget": "checkbox",
               "slug": "iphone_or_android_smartphone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_mobile_smart_iphone_or_android"
+              "tag": "member_uses_mobile_smart_iphone_or_android"
             },
             {
               "label": "Other smartphone or internet-capable device",
@@ -176,7 +176,7 @@
               "widget": "checkbox",
               "slug": "other_smartphone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_mobile_smart_other"
+              "tag": "member_uses_mobile_smart_other"
             },
             {
               "label": "I don't have a mobile phone",
@@ -184,7 +184,7 @@
               "widget": "checkbox",
               "slug": "no_mobile_phone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_mobile_none"
+              "tag": "member_uses_mobile_none"
             }
           ],
           "nodeType": "section"
@@ -200,7 +200,7 @@
               "widget": "checkbox",
               "slug": "personal_computer",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_computer_personal"
+              "tag": "member_uses_internet_computer_personal"
             },
             {
               "label": "Smartphone",
@@ -208,7 +208,7 @@
               "widget": "checkbox",
               "slug": "smartphone",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_phone_smart"
+              "tag": "member_uses_internet_phone_smart"
             },
             {
               "label": "Tablet / iPad",
@@ -216,7 +216,7 @@
               "widget": "checkbox",
               "slug": "tablet_or_ipad",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_tablet"
+              "tag": "member_uses_internet_tablet"
             },
             {
               "label": "Library or community computer",
@@ -224,7 +224,7 @@
               "widget": "checkbox",
               "slug": "library_or_community_computer",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_computer_community"
+              "tag": "member_uses_internet_computer_community"
             },
             {
               "label": "Through family or friends",
@@ -232,7 +232,7 @@
               "widget": "checkbox",
               "slug": "family_or_friends",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_computer_family_or_friends"
+              "tag": "member_uses_internet_computer_family_or_friends"
             },
             {
               "label": "I don't use the internet on a regular basis",
@@ -240,7 +240,7 @@
               "widget": "checkbox",
               "slug": "does_not_use_internet",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_none"
+              "tag": "member_uses_internet_none"
             },
             {
               "label": "Other",
@@ -248,7 +248,7 @@
               "widget": "checkbox",
               "slug": "other",
               "answerType": "boolean",
-              "cloverKey": "member_uses_internet_other"
+              "tag": "member_uses_internet_other"
             },
             {
               "label": "Describe",
@@ -342,7 +342,7 @@
           "answerType": "boolean",
           "label": "Does the member have a caregiver?",
           "nodeType": "question",
-          "cloverKey": "member_has_caregiver"
+          "tag": "member_has_caregiver"
         },
         {
           "indent": 1,
@@ -476,7 +476,7 @@
               "answerType": "number",
               "label": "Goal identifier",
               "nodeType": "question",
-              "cloverKey": "member_careplan_goal_number"
+              "tag": "member_careplan_goal_number"
             },
             {
               "label": "Select category",
@@ -484,7 +484,7 @@
               "widget": "radios",
               "slug": "select_category",
               "answerType": "text",
-              "cloverKey": "member_careplan_category",
+              "tag": "member_careplan_category",
               "answerEnum": [
                 {
                   "label": "Chronic condition health literacy",
@@ -510,7 +510,7 @@
               "widget": "textarea",
               "slug": "goal_and_intervention_details",
               "answerType": "text",
-              "cloverKey": "member_careplan_goal_description"
+              "tag": "member_careplan_goal_description"
             },
             {
               "label": "Member\u2019s plan to achieve goal",
@@ -518,7 +518,7 @@
               "widget": "textarea",
               "slug": "member_plan_to_achieve_goal",
               "answerType": "text",
-              "cloverKey": "member_careplan_plan"
+              "tag": "member_careplan_plan"
             },
             {
               "label": "Readiness stage",
@@ -526,7 +526,7 @@
               "widget": "radios",
               "slug": "readiness_stage",
               "answerType": "text",
-              "cloverKey": "member_careplan_readiness",
+              "tag": "member_careplan_readiness",
               "answerEnum": [
                 {
                   "label": "Precontemplation",
@@ -556,7 +556,7 @@
               "widget": "radios",
               "slug": "status",
               "answerType": "text",
-              "cloverKey": "member_careplan_status",
+              "tag": "member_careplan_status",
               "answerEnum": [
                 {
                   "label": "Complete",
@@ -585,7 +585,7 @@
               "widget": "yesNoRadios",
               "slug": "needs_interdisciplinary_meeting",
               "answerType": "boolean",
-              "cloverKey": "member_careplan_needs_escalation"
+              "tag": "member_careplan_needs_escalation"
             },
             {
               "slug": "notes",
@@ -623,7 +623,7 @@
               "widget": "checkbox",
               "slug": "crisis_issues",
               "answerType": "boolean",
-              "cloverKey": "member_has_crisis_issues"
+              "tag": "member_has_crisis_issues"
             },
             {
               "label": "Needs a fall risk follow up",
@@ -631,7 +631,7 @@
               "widget": "checkbox",
               "slug": "needs_fall_risk_follow_up",
               "answerType": "boolean",
-              "cloverKey": "member_needs_fall_risk_follow_up"
+              "tag": "member_needs_fall_risk_follow_up"
             },
             {
               "label": "Lack of home safety",
@@ -639,7 +639,7 @@
               "widget": "checkbox",
               "slug": "lacking_home_safety",
               "answerType": "boolean",
-              "cloverKey": "member_lacking_home_safety"
+              "tag": "member_lacking_home_safety"
             },
             {
               "label": "Other housing issues",
@@ -647,7 +647,7 @@
               "widget": "checkbox",
               "slug": "other_housing_issues",
               "answerType": "boolean",
-              "cloverKey": "member_has_housing_issues"
+              "tag": "member_has_housing_issues"
             },
             {
               "label": "Mental conditions",
@@ -655,7 +655,7 @@
               "widget": "checkbox",
               "slug": "mental_conditions",
               "answerType": "boolean",
-              "cloverKey": "member_needs_help_behavioral_health"
+              "tag": "member_needs_help_behavioral_health"
             },
             {
               "label": "Substance use",
@@ -663,7 +663,7 @@
               "widget": "checkbox",
               "slug": "substance_use",
               "answerType": "boolean",
-              "cloverKey": "member_needs_help_substance_use"
+              "tag": "member_needs_help_substance_use"
             },
             {
               "label": "Exposure to violence or neglect",
@@ -671,7 +671,7 @@
               "widget": "checkbox",
               "slug": "exposure_to_violence_or_neglect",
               "answerType": "boolean",
-              "cloverKey": "member_has_exposure_violence_or_neglect"
+              "tag": "member_has_exposure_violence_or_neglect"
             },
             {
               "label": "Lack of caregiver support",
@@ -679,7 +679,7 @@
               "widget": "checkbox",
               "slug": "lack_of_caregiver_support",
               "answerType": "boolean",
-              "cloverKey": "member_needs_help_caregiver"
+              "tag": "member_needs_help_caregiver"
             },
             {
               "label": "Other SW escalation",
@@ -687,7 +687,7 @@
               "widget": "checkbox",
               "slug": "other_sw_escalation",
               "answerType": "boolean",
-              "cloverKey": "member_needs_help_socialwork"
+              "tag": "member_needs_help_socialwork"
             },
             {
               "label": "Increased chronic symptoms",
@@ -695,7 +695,7 @@
               "widget": "checkbox",
               "slug": "increased_chronic_symptoms",
               "answerType": "boolean",
-              "cloverKey": "member_has_increase_chronic_symptoms"
+              "tag": "member_has_increase_chronic_symptoms"
             },
             {
               "label": "Decreased activity levels",
@@ -703,7 +703,7 @@
               "widget": "checkbox",
               "slug": "decreased_activity_levels",
               "answerType": "boolean",
-              "cloverKey": "member_has_decrease_activity"
+              "tag": "member_has_decrease_activity"
             },
             {
               "label": "Increased pain levels",
@@ -711,7 +711,7 @@
               "widget": "checkbox",
               "slug": "increased_pain_levels",
               "answerType": "boolean",
-              "cloverKey": "member_has_increase_pain"
+              "tag": "member_has_increase_pain"
             },
             {
               "label": "Other NP escalation",
@@ -719,7 +719,7 @@
               "widget": "checkbox",
               "slug": "other_np_escalation",
               "answerType": "boolean",
-              "cloverKey": "member_needs_help_np"
+              "tag": "member_needs_help_np"
             }
           ],
           "nodeType": "section"

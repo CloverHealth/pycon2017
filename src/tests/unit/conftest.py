@@ -35,8 +35,10 @@ def _load_raw_data(data_dir, fixture_name):
     schema_data = load_json_file(_testfile_path('schema'))
     responses_data = load_json_file(_testfile_path('responses'))
     with open(_testfile_path('events', ext='csv')) as f:
-        events_data = sorted(csv.DictReader(f, fieldnames=['schema_path', 'value', 'answer_type']),
+        events_data = sorted(csv.DictReader(f, fieldnames=['schema_path', 'value', 'answer_type', 'tag']),
                              key=lambda e: e['schema_path'])
+        for e in events_data:
+            e['tag'] = e['tag'] or None
 
     return RawData(schema_data, responses_data, events_data)
 
@@ -114,18 +116,20 @@ def loader(session: sa_orm.Session, loader_params):
 
 @pytest.fixture(
     params=[
-        ExtractorParams(extractors.naive_extractor, {'joined_load': False}),
-        ExtractorParams(extractors.naive_extractor, {'joined_load': True}),
-        ExtractorParams(extractors.naive_load_all_extractor, {'joined_load': True}),
-        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 2, 'joined_load': True}),
-        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 10, 'joined_load': True}),
+        ExtractorParams(extractors.naive_extractor, {'related': 'default'}),
+        ExtractorParams(extractors.naive_extractor, {'related': 'joined_load'}),
+        ExtractorParams(extractors.naive_load_all_extractor, {'related': 'joined_load'}),
+        ExtractorParams(extractors.naive_load_all_extractor, {'related': 'explicit_join'}),
+        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 2, 'related': 'joined_load'}),
+        ExtractorParams(extractors.chunked_extractor, {'chunk_size': 10, 'related': 'explicit_join'}),
     ],
     ids=[
-        'naive_iterator-no-join',
-        'naive_iterator-with-join',
-        'naive_load_all',
-        'chunked_2',
-        'chunked_10'
+        'naive_default',
+        'naive_joined_load',
+        'load_all_joined_load',
+        'load_all_explicit_join',
+        'chunked_2_joined_load',
+        'chunked_10_explicit_join',
     ]
 )
 def extractor(request, session: sa_orm.Session):

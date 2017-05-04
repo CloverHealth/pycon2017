@@ -1,3 +1,4 @@
+from collections import namedtuple
 import datetime
 import functools
 import logging
@@ -61,18 +62,21 @@ def _make_path_str(path: list) -> str:
     return '.'.join(path)
 
 
+NodeInfo = namedtuple('NodeInfo', ['answer_type', 'tag'])
+
 def _load_node_path_map(session, form_id) -> dict:
     """
-    Extracts a dictionary of node paths to AnswerTypes
+    Loads and constructs a information map used for transforming nested object nodes
 
     :param session: SQLAlchemy session
     :param form_id: Form.id
-    :returns: dictionary of node path strings to AnswerType
+    :returns: dictionary of node path strings to NodeInfo instances
     """
-    def _answer_types(node: dict, path: list):
+    def _node_info(node: dict, path: list):
         answer_type = node.get('answerType')
         if answer_type:
-            yield _make_path_str(path), constants.AnswerType[answer_type]
+            # schema_path, answerType, tag
+            yield _make_path_str(path), constants.AnswerType[answer_type], node.get('tag')
 
     def _children(node: dict, path: list):
         node_slug = node.get('slug')
@@ -83,8 +87,11 @@ def _load_node_path_map(session, form_id) -> dict:
                 if child_slug:
                     yield path + [child_slug], child
 
-    form = session.query(models.Form).get(form_id)
-    return {path: answer_type for path, answer_type in map_nested(form.schema, _answer_types, _children)}
+    form_schema = session.query(models.Form.schema).filter_by(id=form_id).scalar()
+    return {
+        path: NodeInfo(answer_type, tag)
+        for path, answer_type, tag in map_nested(form_schema, _node_info, _children)
+    }
 
 
 def get_node_path_map_cache(session):
@@ -107,9 +114,8 @@ def get_node_path_map_cache(session):
     return cached_wrapper(_get_node_path_map)
 
 
-def _make_output_dictionary(value=None, answer_type=None, **kwargs):
+def _make_output_dictionary(answer_type=None, **kwargs):
     return {
-        'value': str(value),
         'answer_type': answer_type.name,
         **kwargs
     }
@@ -123,7 +129,6 @@ def _transform_submission(f_get_node_path_map,
         'processed_on': processed_on,
         'form_id': submission.form_id,
 
-        # TODO do we also force joined loads on this specific column too?
         'form_name': submission.form.name,
 
         'submission_id': submission.id,
@@ -144,6 +149,7 @@ def _transform_submission(f_get_node_path_map,
         yield output_mapper(
             schema_path=path,
             value=answer['value'],
+            tag=answer['tag'],
             answer_type=answer['answer_type'],
             **common_kwargs
         )
@@ -154,14 +160,14 @@ def _flatten_responses(responses: dict, node_map: dict):
         for k, v in node.items():
             if not isinstance(v, (dict, list,)):
                 path_str = _make_path_str(path + [k])
-                answer_type = node_map.get(path_str)
-                if answer_type:
+                node_info = node_map.get(path_str)
+                if node_info:
                     # NOTE: for this workshop, we assume all date answer types are properly formatted
-                    if answer_type == constants.AnswerType.boolean:
+                    if node_info.answer_type == constants.AnswerType.boolean:
                         str_value = 'true' if v else 'false'
                     else:
                         str_value = str(v)
-                    yield path_str, {'answer_type': answer_type, 'value': str_value}
+                    yield path_str, {'answer_type': node_info.answer_type, 'value': str_value, 'tag': node_info.tag}
 
     def _children(node: dict, path: list):
         for k, v in node.items():

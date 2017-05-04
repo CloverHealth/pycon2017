@@ -41,7 +41,6 @@ def test_load_submission_range(source_data, extractor):
         num_iterations += 1
 
     # verify metrics
-    # TODO load back actual IDs from database??
     assert num_iterations == source_data.submissions
     assert len(submission_ids) == source_data.submissions
     assert len(form_ids) == source_data.forms

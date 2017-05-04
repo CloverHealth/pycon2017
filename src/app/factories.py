@@ -104,6 +104,7 @@ class ResponseEventFactory(factory.Factory):
     processed_on = factory.Faker('date_time_this_decade', tzinfo=UTC_TZ)
     schema_path = factory.Faker('slug')
     answer_type = factory.Iterator(constants.AnswerType)
+    tag = None
 
     @factory.lazy_attribute
     def value(self):
@@ -201,7 +202,7 @@ def make_response(get_node_path_map, form_id):
     node_map = get_node_path_map(form_id)
 
     responses = {}
-    for path, answer_type in node_map.items():
+    for path, node_info in node_map.items():
         components = path.split('.')
         leaf_key = components.pop()
 
@@ -212,6 +213,6 @@ def make_response(get_node_path_map, form_id):
             d = d[c]
 
         # generate the fake leaf value and inject it
-        d[leaf_key] = JSON_FAKERS.make_fake_value(answer_type)
+        d[leaf_key] = JSON_FAKERS.make_fake_value(node_info.answer_type)
 
     return responses

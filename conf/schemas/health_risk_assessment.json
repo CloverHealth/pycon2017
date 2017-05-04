@@ -32,7 +32,7 @@
           "slug": "last_name"
         },
         {
-          "cloverKey": "member_cpid",
+          "tag": "member_cpid",
           "nodeType": "question",
           "answerType": "text",
           "widget": "text",
@@ -561,7 +561,7 @@
           "slug": "exercise_description"
         },
         {
-          "cloverKey": "member_health_vs_last_year",
+          "tag": "member_health_vs_last_year",
           "nodeType": "question",
           "widget": "radios",
           "label": {
@@ -642,7 +642,7 @@
           "slug": "daily_help"
         },
         {
-          "cloverKey": "member_times_fell_in_last_year",
+          "tag": "member_times_fell_in_last_year",
           "nodeType": "question",
           "widget": "number",
           "label": {
@@ -653,7 +653,7 @@
           "slug": "falls"
         },
         {
-          "cloverKey": "member_needs_help_transportation",
+          "tag": "member_needs_help_transportation",
           "nodeType": "question",
           "widget": "radios",
           "label": {
@@ -833,7 +833,7 @@
           "slug": "weekly_nutrition"
         },
         {
-          "cloverKey": "member_alcohol_frequency",
+          "tag": "member_alcohol_frequency",
           "nodeType": "question",
           "widget": "radios",
           "label": {
@@ -928,7 +928,7 @@
           "slug": "smoking_years"
         },
         {
-          "cloverKey": "member_recreational_drug_use",
+          "tag": "member_recreational_drug_use",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1028,7 +1028,7 @@
               "slug": "chronic_fatigue"
             },
             {
-              "cloverKey": "member_uses_mobility_assistance",
+              "tag": "member_uses_mobility_assistance",
               "nodeType": "section",
               "children": [
                 {
@@ -1112,7 +1112,7 @@
           "slug": "emergency_visits"
         },
         {
-          "cloverKey": "member_feels_depressed_often",
+          "tag": "member_feels_depressed_often",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1123,7 +1123,7 @@
           "slug": "depressed"
         },
         {
-          "cloverKey": "member_emotion_vs_last_year",
+          "tag": "member_emotion_vs_last_year",
           "nodeType": "question",
           "widget": "radios",
           "label": {
@@ -1218,7 +1218,7 @@
           "slug": "support_frequency"
         },
         {
-          "cloverKey": "member_lacking_food",
+          "tag": "member_lacking_food",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1229,7 +1229,7 @@
           "slug": "lacking_food"
         },
         {
-          "cloverKey": "member_lacking_utilities",
+          "tag": "member_lacking_utilities",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1240,7 +1240,7 @@
           "slug": "lacking_utilities"
         },
         {
-          "cloverKey": "member_lacking_stable_housing",
+          "tag": "member_lacking_stable_housing",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1251,7 +1251,7 @@
           "slug": "lacking_stable_housing"
         },
         {
-          "cloverKey": "member_lacking_medical_care",
+          "tag": "member_lacking_medical_care",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1262,7 +1262,7 @@
           "slug": "lacking_medical_care"
         },
         {
-          "cloverKey": "member_lacking_transportation",
+          "tag": "member_lacking_transportation",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1273,7 +1273,7 @@
           "slug": "lacking_transportation"
         },
         {
-          "cloverKey": "member_lacking_home_safety",
+          "tag": "member_lacking_home_safety",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {
@@ -1284,7 +1284,7 @@
           "slug": "lacking_home_safety"
         },
         {
-          "cloverKey": "member_requests_basic_needs_assistance",
+          "tag": "member_requests_basic_needs_assistance",
           "nodeType": "question",
           "widget": "yesNoRadios",
           "label": {

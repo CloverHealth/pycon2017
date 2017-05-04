@@ -145,7 +145,12 @@ def test_json_transform_to_model(session, raw_data, transformer, mock_logger):
 
     # convert results to a dictionary of only the data we care about
     sorted_actual_events = sorted(
-        ({'schema_path': e.schema_path, 'value': e.value, 'answer_type': e.answer_type.name} for e in results),
+        ({
+            'schema_path': e.schema_path,
+            'value': e.value,
+            'answer_type': e.answer_type.name,
+            'tag': None if not e.tag else e.tag
+        } for e in results),
         key=lambda e: e['schema_path']
     )
     assert sorted_actual_events == raw_data.events
@@ -187,7 +192,12 @@ def test_json_transform_to_dict(session, raw_data, transformer):
         assert actual_event['processed_on'] == timestamp_transformation
 
     sorted_actual_events = sorted(
-        ({'schema_path': e['schema_path'], 'value': e['value'], 'answer_type': e['answer_type']} for e in results),
+        ({
+            'schema_path': e['schema_path'],
+            'value': e['value'],
+            'answer_type': e['answer_type'],
+            'tag': None if not e['tag'] else e['tag']
+        } for e in results),
         key=lambda e: e['schema_path']
     )
     assert sorted_actual_events == raw_data.events
@@ -215,6 +225,7 @@ def test_node_path_map_caching(monkeypatch, session, transformer, mock_logger,
     # create an unrelated response to a different form (uses a string response instead)
     adjusted_schema = copy.deepcopy(simple_form.schema)
     adjusted_schema['children'][0]['children'][0]['answerType'] = 'text'
+    adjusted_schema['children'][0]['children'][0]['tag'] = 'member_bmi_as_text'
     unrelated_form = factories.FormFactory.build(name='unrelated', schema=adjusted_schema)
     session.add(unrelated_form)
     unreleated_submission = factories.SubmissionFactory(form=unrelated_form, responses={
@@ -260,6 +271,7 @@ def test_node_path_map_caching(monkeypatch, session, transformer, mock_logger,
         assert actual_event
         assert actual_event.schema_path == 'basic_info.bmi'
         assert int(actual_event.value) == expected_submission.responses['basic_info']['bmi']
+        assert actual_event.tag == 'member_bmi'
 
     other_schema_events = {e.submission_id: e for e in results if e.form_id != simple_form.id}
     assert unreleated_submission.id in other_schema_events
@@ -267,6 +279,7 @@ def test_node_path_map_caching(monkeypatch, session, transformer, mock_logger,
     assert newer_submission_event
     assert newer_submission_event.schema_path == 'basic_info.bmi'
     assert newer_submission_event.value == 'my BMI is 40'
+    assert newer_submission_event.tag == 'member_bmi_as_text'
 
     # verify that the cache was used as expected
     assert generated_cache

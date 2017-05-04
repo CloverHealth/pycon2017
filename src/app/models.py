@@ -139,3 +139,4 @@ class ResponseEvent(DataWarehouseModel):
     schema_path = sa.Column(sa.Text, nullable=False)  # dot separated path to node in Submission.responses
     value = sa.Column(sa.Text, nullable=False)  # value of node in Submission.responses
     answer_type = sa.Column(sa.Enum(constants.AnswerType), nullable=False)  # answerType from node in Schema
+    tag = sa.Column(sa.Text, nullable=True, default=None) # tag from node in Schema (if exists)

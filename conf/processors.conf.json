@@ -3,7 +3,7 @@
     "extractor": {
       "name": "naive_extractor",
       "kwargs": {
-        "joined_load": true
+        "related": "default"
       }
     },
     "transformer": {},
@@ -16,7 +16,7 @@
     "extractor": {
       "name": "naive_load_all_extractor",
       "kwargs": {
-        "joined_load": true
+        "related": "joined_load"
       }
     },
     "transformer": {},
@@ -29,7 +29,7 @@
     "extractor": {
       "name": "naive_extractor",
       "kwargs": {
-        "joined_load": true
+        "related": "joined_load"
       }
     },
     "transformer": {},
@@ -42,7 +42,7 @@
       "name": "chunked_extractor",
       "kwargs": {
         "chunk_size": 5,
-        "joined_load": true
+        "related": "joined_load"
       }
     },
     "transformer": {},
@@ -58,7 +58,7 @@
       "name": "chunked_extractor",
       "kwargs": {
         "chunk_size": 500,
-        "joined_load": false
+        "related": "default"
       }
     },
     "transformer": {},
@@ -74,7 +74,7 @@
       "name": "chunked_extractor",
       "kwargs": {
         "chunk_size": 500,
-        "joined_load": true
+        "related": "explicit_join"
       }
     },
     "transformer": {},
@@ -85,12 +85,12 @@
       }
     }
   },
-  "chunked-mappings-with-join": {
+  "chunked-mappings": {
     "extractor": {
       "name": "chunked_extractor",
       "kwargs": {
         "chunk_size": 500,
-        "joined_load": true
+        "related": "joined_load"
       }
     },
     "transformer": {
