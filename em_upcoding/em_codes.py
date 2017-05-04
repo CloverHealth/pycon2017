@@ -16,6 +16,7 @@ def get_claims_base_data(claim_lines, codes):
              of paid claims and a certain set of procedure codes.
     """
     columns = [
+        claim_lines.c.personid,
         claim_lines.c.servicing_provider_npi,
         claim_lines.c.procedure_code,
         claim_lines.c.procedure_name,
