@@ -21,17 +21,17 @@ Then run the following to install your packages:
 
 To run the unit tests normally:
 
-    pytest src/tests/
+    pytest tests/
 
 However, for faster repeated execution, you can reuse the same test database with models using the `--keepdb` flag.
 This will create a re-useable database with pre-created model tables (but no data) in the `.test_db` subdirectory.
 
     # first run will take a normal amount of time
-    pytest --keepdb src/tests/
+    pytest --keepdb tests/
 
     # subsequent runs will be faster since database will not need to be re-created
-    pytest --keepdb src/tests/
-    pytest --keepdb src/tests/
+    pytest --keepdb tests/
+    pytest --keepdb tests/
     ...
 
 When your finished or if the model schema has changed, just run the following
@@ -44,11 +44,12 @@ When your finished or if the model schema has changed, just run the following
 
 2. Generate a single scenarios (e.g. `myscenario`) as follows:
 
-    python src/main.py generate myscenario
+
+    python main.py generate myscenario
 
 You can then connect to the database to review your results as follows:
 
-    python src/main.py psql myscenario
+    python main.py psql myscenario
 
 
 ## Performance testing
@@ -59,35 +60,41 @@ You can then connect to the database to review your results as follows:
 
 Run the following:
 
-    python src/main.py process myscenario large-chunks
+    python main.py process myscenario large-chunks
 
 #### SQL Logging
 
 If you need to see what SQLAlchemy is sending to Postgres for making optimization queries, do the following:
 
-    python src/main.py --debug-sql process . . . >sql.log
+    python main.py --debug-sql process . . . >sql.log
     cat sql.log
 
 #### Profiling for timing
 
 Run the following to generate profiling output:
 
-    python -m cProfile -o timing.stats src/main.py . . .
+    python -m cProfile -o timing.stats main.py . . .
 
-Then run the following to visualize the profiler output:
+Then run the following to visualize the profiler output using this `gprof2dot` script:
 
-    gprof2dot -f pstats timing.stats | dot -Tpng > timing.png
-    open timing.png
+    ./visualize_pstats.sh timing.stats
+
+You can remove the results by running:
+
+    rm -f timing.stats*
 
 #### Profiling for memory
 
-To see the high-level incremental memory usage at the processor level, use the `--debug-mem` option as follows:
+NOTE: Due to an [installation issue](http://stackoverflow.com/questions/21784641/installation-issue-with-matplotlib-python)
+with the `matplotlib` pip package on OS X, please run the following once before the visualization step below:
 
-    python src/main.py process --debug-mem . . .
+    mkdir -p ~/.matplotlib
+    echo 'backend: TkAgg' >> ~/.matplotlib/matplotlibrc
+
 
 If you need to see graphical output, run the following to generate the profiling output:
 
-    mprof run python src/main.py . . .
+    mprof run python main.py . . .
 
 Then run the following to visualize the output:
 
@@ -97,11 +104,10 @@ Since `memory_profile` creates output files as (`mprofile_*.dat`), you can remov
 
     mprof clean
 
-NOTE: Due to an [installation issue](http://stackoverflow.com/questions/21784641/installation-issue-with-matplotlib-python)
-with the `matplotlib` pip package on OS X, please run the following once before the visualization step above:
 
-    mkdir -p ~/.matplotlib
-    echo 'backend: TkAgg' >> ~/.matplotlib/matplotlibrc
+To see the high-level incremental memory usage at the processor level, use the `--debug-mem` option as follows:
+
+    python main.py process --debug-mem . . .
 
 
 ## Running the notebook
@@ -110,4 +116,4 @@ Start up Jupyter Notebook
 
     jupyter notebook
 
-Open the `etl_workshop` notebook (`etl_workshop.ipynb`) and enjoy!
+Open any of the notebooks and enjoy!

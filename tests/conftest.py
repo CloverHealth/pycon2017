@@ -1,5 +1,5 @@
-from collections import namedtuple
 import os
+from collections import namedtuple
 
 import pytest
 import sqlalchemy as sa
@@ -8,7 +8,6 @@ import sqlalchemy.orm as sa_orm
 import testing.postgresql
 
 from app import models
-
 
 # re-useable test database subdirectory
 KEEPDB_PATH = '.test_db'

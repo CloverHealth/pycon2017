@@ -1,7 +1,7 @@
-from collections import namedtuple
 import datetime
 import functools
 import logging
+from collections import namedtuple
 
 from app import models, constants
 from app.util.timestamps import utc_now
@@ -135,7 +135,9 @@ def _transform_submission(f_get_node_path_map,
         'submission_created': submission.date_created,
 
         # by default, accessing the 'user' relationship property will require a separate query to the 'users' table
-        # if there is a cache miss.  This can be prevented with the 'joined_load' in the extractor
+        # if it is not already in the SQLAlchemy session.
+        #
+        # This can be prevented with the 'joined_load' option in the extractor
         'user_id': submission.user.id,
         'user_full_name': submission.user.full_name,
     }

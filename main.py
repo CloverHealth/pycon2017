@@ -10,11 +10,10 @@ import time
 import sqlalchemy as sa
 import sqlalchemy.orm as sa_orm
 
-from app import models, constants, factories
 from app import db as perf_db
-from app.util.json import load_json_file
+from app import models, constants, factories
 from app.logs import setup_logging
-
+from app.util.json import load_json_file
 
 LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +38,7 @@ def make_perf_session(test_db)-> sa_orm.Session:
 
 
 def generate_data(session:sa_orm.Session, scenario_name:dict,
-                  conf_dir:str=constants.DEFAULT_CONFIG_DIR):
+                  conf_dir:str= constants.DEFAULT_CONFIG_DIR):
     config = load_json_file(os.path.join(conf_dir, 'perfdata.conf.json'))
     scenario = config[scenario_name]
 
@@ -63,7 +62,7 @@ def generate_data(session:sa_orm.Session, scenario_name:dict,
 
 
 def process_data(session:sa_orm.Session, config_name:str, use_memory_profiler:bool,
-                 conf_dir:str=constants.DEFAULT_CONFIG_DIR):
+                 conf_dir:str= constants.DEFAULT_CONFIG_DIR):
     # constructor the processor
     config = load_json_file(os.path.join(conf_dir, constants.PROCESSOR_CONFIG_FILE))
     processor = factories.make_processor(session, config[config_name], use_memory_profiler=use_memory_profiler)

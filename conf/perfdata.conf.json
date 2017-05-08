@@ -23,6 +23,14 @@
       "submissions": 20
     }
   },
+  "demo": {
+    "schemas": ["general", "health_risk_assessment"],
+    "metrics": {
+      "users": 50,
+      "forms": 2,
+      "submissions": 50
+    }
+  },
   "medium": {
     "schemas": ["general", "health_risk_assessment", "scip"],
     "metrics": {

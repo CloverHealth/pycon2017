@@ -2,8 +2,8 @@ import logging
 
 import more_itertools
 import sqlalchemy.orm as sa_orm
-from app import models
 
+from app import models
 
 LOGGER = logging.getLogger(__name__)
 

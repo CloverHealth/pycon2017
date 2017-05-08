@@ -1,4 +1,5 @@
 import enum
+
 import sqlalchemy.orm as sa_orm
 
 from app import models

@@ -7,8 +7,8 @@ import pytest
 import sqlalchemy.orm as sa_orm
 
 from app import factories
-from app.util.json import load_json_file
 from app.etl import extractors, transformers, loaders
+from app.util.json import load_json_file
 from tests import mocks
 
 
@@ -22,7 +22,7 @@ def user(session):
 
 @pytest.fixture(scope='session')
 def data_dir(root_path):
-    return os.path.join(root_path, 'src', 'tests', 'data')
+    return os.path.join(root_path, 'tests', 'data')
 
 
 RawData = namedtuple('RawData', ['schema', 'responses', 'events'])
