@@ -9,9 +9,7 @@ import time
 
 import sqlalchemy as sa
 import sqlalchemy.orm as sa_orm
-
-from app import db as perf_db
-from app import models, constants, factories
+from app import constants, db as perf_db, models, factories
 from app.logs import setup_logging
 from app.util.json import load_json_file
 

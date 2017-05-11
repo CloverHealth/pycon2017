@@ -1,10 +1,11 @@
 import sqlalchemy as sa
 import sqlalchemy.dialects.postgresql as sa_pg
-import sqlalchemy.orm as sa_orm
 from sqlalchemy.ext import declarative
+import sqlalchemy.orm as sa_orm
 
 from app import constants
 from app.util.timestamps import utc_now
+
 
 __all__ = [
     'init_database'

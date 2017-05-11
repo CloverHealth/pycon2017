@@ -5,9 +5,9 @@ from collections import namedtuple
 
 import pytest
 import sqlalchemy.orm as sa_orm
-
 from app import factories
 from app.etl import extractors, transformers, loaders
+
 from app.util.json import load_json_file
 from tests import mocks
 

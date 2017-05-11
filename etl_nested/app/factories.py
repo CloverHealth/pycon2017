@@ -7,11 +7,11 @@ from collections import namedtuple
 import factory
 import more_itertools
 import sqlalchemy.orm as sa_orm
-from faker import Faker
-
-from app import models, constants, processor
+from app import constants, models, processor
 from app.etl import extractors, transformers, loaders
 from app.util.timestamps import UTC_TZ
+from faker import Faker
+
 
 FAKE = Faker()
 

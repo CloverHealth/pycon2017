@@ -4,11 +4,12 @@ import random
 import types
 
 import pytest
-from freezegun import freeze_time
-
 from app import models, factories
 from app.etl import transformers
 from app.util.timestamps import utc_now
+from freezegun import freeze_time
+
+
 
 SAMPLE_OBJECTS = [
     {},

@@ -3,8 +3,9 @@ import functools
 import logging
 from collections import namedtuple
 
-from app import models, constants
+from app import constants, models
 from app.util.timestamps import utc_now
+
 
 LOGGER = logging.getLogger(__name__)
 NODE_PATH_CACHE_SIZE = 16  # should be a power of 2

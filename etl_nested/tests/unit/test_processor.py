@@ -3,7 +3,6 @@ import os
 
 import pytest
 import sqlalchemy.orm as sa_orm
-
 from app import constants, models, processor, factories
 from app.etl import transformers, loaders
 from app.util.json import load_json_file

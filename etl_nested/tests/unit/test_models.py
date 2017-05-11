@@ -1,11 +1,11 @@
 import uuid
 
 import pytest
-from freezegun import freeze_time
-
 from app import constants, factories
 from app import models
 from app.util.timestamps import utc_now
+from freezegun import freeze_time
+
 
 number = 1
 text = 2

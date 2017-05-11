@@ -5,7 +5,7 @@ __pycache__/
 .idea/
 
 # pyenv files
-.python-version
+**/.python-version
 
 # pytest artifacts
 .cache/
