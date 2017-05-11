@@ -1,0 +1,106 @@
+{
+  "naive-single": {
+    "extractor": {
+      "name": "naive_extractor",
+      "kwargs": {
+        "related": "default"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "naive_loader"
+    }
+  },
+
+  "naive-all": {
+    "extractor": {
+      "name": "naive_load_all_extractor",
+      "kwargs": {
+        "related": "joined_load"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "naive_add_all_loader"
+    }
+  },
+
+  "load-single-flush-single": {
+    "extractor": {
+      "name": "naive_extractor",
+      "kwargs": {
+        "related": "joined_load"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "individual_flush_loader"
+    }
+  },
+  "chunked-objects-small": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 5,
+        "related": "joined_load"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
+        "chunk_size": 5
+      }
+    }
+  },
+  "chunked-objects-no-join": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 500,
+        "related": "default"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
+        "chunk_size": 500
+      }
+    }
+  },
+  "chunked-objects-with-join": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 500,
+        "related": "explicit_join"
+      }
+    },
+    "transformer": {},
+    "loader": {
+      "name": "chunked_bulk_save_objects_loader",
+      "kwargs": {
+        "chunk_size": 500
+      }
+    }
+  },
+  "chunked-mappings": {
+    "extractor": {
+      "name": "chunked_extractor",
+      "kwargs": {
+        "chunk_size": 500,
+        "related": "joined_load"
+      }
+    },
+    "transformer": {
+      "to_dict": true
+    },
+    "loader": {
+      "name": "chunked_bulk_insert_mappings",
+      "kwargs": {
+        "chunk_size": 500
+      }
+    }
+  }
+}

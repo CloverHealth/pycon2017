@@ -1,0 +1,758 @@
+{
+  "slug": "patient_scip",
+  "name": "Patient SCIP Assessment",
+  "nodeType": "form",
+  "children": [
+    {
+      "slug": "basic_info",
+      "label": "Basic information",
+      "widget": "panel",
+      "children": [
+        {
+          "slug": "first_name",
+          "answerType": "text",
+          "label": "First name",
+          "nodeType": "question",
+          "viewOnly": true
+        },
+        {
+          "slug": "last_name",
+          "answerType": "text",
+          "label": "Last name",
+          "nodeType": "question",
+          "viewOnly": true
+        },
+        {
+          "label": "Member CPID",
+          "nodeType": "question",
+          "slug": "cpid",
+          "answerType": "text",
+          "tag": "member_cpid",
+          "viewOnly": true
+        },
+        {
+          "label": "Date of birth",
+          "nodeType": "question",
+          "widget": "date",
+          "slug": "date_of_birth",
+          "answerType": "date",
+          "viewOnly": true
+        },
+        {
+          "label": "Gender",
+          "nodeType": "question",
+          "widget": "radios",
+          "slug": "gender",
+          "answerType": "text",
+          "answerEnum": [
+            {
+              "label": "Male",
+              "value": "male"
+            },
+            {
+              "label": "Female",
+              "value": "female"
+            }
+          ],
+          "viewOnly": true
+        },
+        {
+          "label": "Language",
+          "nodeType": "question",
+          "widget": "radios",
+          "slug": "language",
+          "answerType": "text",
+          "answerEnum": [
+            {
+              "label": "English",
+              "value": "english"
+            },
+            {
+              "label": "Spanish",
+              "value": "spanish"
+            },
+            {
+              "label": "Other",
+              "value": "other"
+            }
+          ]
+        },
+        {
+          "label": "Other",
+          "nodeType": "question",
+          "widget": "text",
+          "slug": "language_other",
+          "answerType": "text",
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": "other",
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".language",
+                "operator": "var"
+              }
+            }
+          },
+          "indent": 1
+        },
+        {
+          "slug": "primary_phone",
+          "answerType": "text",
+          "label": "Primary phone",
+          "nodeType": "question"
+        },
+        {
+          "slug": "secondary_phone",
+          "answerType": "text",
+          "label": "Secondary phone",
+          "nodeType": "question",
+          "widget": "text"
+        },
+        {
+          "slug": "email_disclaimer",
+          "answerType": "boolean",
+          "label": "By giving us your email address, you are providing permission for us to contact you via email with information related to your health benefits, additional products, services and/or educational information related to your health care. Providing your email address is optional. Would you like to provide us with your email address?",
+          "nodeType": "question",
+          "widget": "yesNoRadios"
+        },
+        {
+          "label": "Email",
+          "nodeType": "question",
+          "widget": "text",
+          "slug": "email",
+          "answerType": "text",
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".email_disclaimer",
+                "operator": "var"
+              }
+            }
+          },
+          "indent": 1
+        },
+        {
+          "slug": "mobile_phone_kind",
+          "label": "What kind of mobile phone do you use?",
+          "widget": "questionGroup",
+          "children": [
+            {
+              "label": "Pre-paid phone",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "pre_paid_phone",
+              "answerType": "boolean",
+              "tag": "member_uses_mobile_prepaid"
+            },
+            {
+              "label": "Non-smartphone",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "non_smartphone",
+              "answerType": "boolean",
+              "tag": "member_uses_mobile_nonsmart"
+            },
+            {
+              "label": "iPhone or Android smartphone",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "iphone_or_android_smartphone",
+              "answerType": "boolean",
+              "tag": "member_uses_mobile_smart_iphone_or_android"
+            },
+            {
+              "label": "Other smartphone or internet-capable device",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "other_smartphone",
+              "answerType": "boolean",
+              "tag": "member_uses_mobile_smart_other"
+            },
+            {
+              "label": "I don't have a mobile phone",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "no_mobile_phone",
+              "answerType": "boolean",
+              "tag": "member_uses_mobile_none"
+            }
+          ],
+          "nodeType": "section"
+        },
+        {
+          "slug": "internet_access_methods",
+          "label": "How do you usually access the internet?",
+          "widget": "questionGroup",
+          "children": [
+            {
+              "label": "Personal computer",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "personal_computer",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_computer_personal"
+            },
+            {
+              "label": "Smartphone",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "smartphone",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_phone_smart"
+            },
+            {
+              "label": "Tablet / iPad",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "tablet_or_ipad",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_tablet"
+            },
+            {
+              "label": "Library or community computer",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "library_or_community_computer",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_computer_community"
+            },
+            {
+              "label": "Through family or friends",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "family_or_friends",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_computer_family_or_friends"
+            },
+            {
+              "label": "I don't use the internet on a regular basis",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "does_not_use_internet",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_none"
+            },
+            {
+              "label": "Other",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "other",
+              "answerType": "boolean",
+              "tag": "member_uses_internet_other"
+            },
+            {
+              "label": "Describe",
+              "nodeType": "question",
+              "widget": "text",
+              "slug": "other_describe",
+              "answerType": "text",
+              "show": {
+                "ruleType": "tree",
+                "rule": {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".other",
+                    "operator": "var"
+                  }
+                }
+              },
+              "indent": 1
+            }
+          ],
+          "nodeType": "section"
+        }
+      ],
+      "nodeType": "section"
+    },
+    {
+      "slug": "encounter_info",
+      "label": "Encounter information",
+      "widget": "panel",
+      "children": [
+        {
+          "slug": "encounter_date",
+          "answerType": "date",
+          "label": "Encounter date",
+          "nodeType": "question"
+        },
+        {
+          "slug": "visit_number",
+          "answerType": "number",
+          "label": "Visit number",
+          "nodeType": "question"
+        },
+        {
+          "label": "Who was this visit completed with?",
+          "nodeType": "question",
+          "widget": "radios",
+          "slug": "who_was_visit_completed_with",
+          "answerType": "text",
+          "answerEnum": [
+            {
+              "label": "Member only",
+              "value": "member_only"
+            },
+            {
+              "label": "Member and caregiver",
+              "value": "member_and_caregiver"
+            },
+            {
+              "label": "Other",
+              "value": "other"
+            }
+          ]
+        },
+        {
+          "label": "Describe",
+          "nodeType": "question",
+          "slug": "who_was_visit_completed_with_other_describe",
+          "answerType": "text",
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": "other",
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".who_was_visit_completed_with",
+                "operator": "var"
+              }
+            }
+          },
+          "indent": 1
+        },
+        {
+          "slug": "does_member_have_caregiver",
+          "answerType": "boolean",
+          "label": "Does the member have a caregiver?",
+          "nodeType": "question",
+          "tag": "member_has_caregiver"
+        },
+        {
+          "indent": 1,
+          "widget": "radios",
+          "slug": "select_caregiver_type",
+          "answerType": "text",
+          "label": "Select type of caregiver",
+          "nodeType": "question",
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".does_member_have_caregiver",
+                "operator": "var"
+              }
+            }
+          },
+          "answerEnum": [
+            {
+              "label": "Spouse",
+              "value": "spouse"
+            },
+            {
+              "label": "Other family member",
+              "value": "other_family_member"
+            },
+            {
+              "label": "Home health aid",
+              "value": "home_health_aid"
+            },
+            {
+              "label": "Other",
+              "value": "other"
+            }
+          ]
+        },
+        {
+          "label": "Describe",
+          "nodeType": "question",
+          "slug": "select_caregiver_type_other_describe",
+          "answerType": "text",
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": "other",
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".select_caregiver_type",
+                "operator": "var"
+              }
+            }
+          },
+          "indent": 2
+        },
+        {
+          "label": "Please provider contact info for caregiver",
+          "nodeType": "section",
+          "slug": "caregiver_contact_info",
+          "children": [
+            {
+              "slug": "first_name",
+              "answerType": "text",
+              "label": "First name",
+              "nodeType": "question"
+            },
+            {
+              "slug": "last_name",
+              "answerType": "text",
+              "label": "Last name",
+              "nodeType": "question"
+            },
+            {
+              "slug": "phone_number",
+              "answerType": "text",
+              "label": "Phone number",
+              "nodeType": "question"
+            }
+          ],
+          "show": {
+            "ruleType": "tree",
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".does_member_have_caregiver",
+                "operator": "var"
+              }
+            }
+          },
+          "indent": 1
+        },
+        {
+          "slug": "member_signed_pcp_voluntary_consent_form",
+          "answerType": "boolean",
+          "label": "Member signed PCP Voluntary Consent Form",
+          "nodeType": "question",
+          "widget": "checkbox"
+        },
+        {
+          "slug": "member_signed_caregiver_voluntary_consent_form",
+          "answerType": "boolean",
+          "label": "Member signed Caregiver Voluntary Consent Form",
+          "nodeType": "question",
+          "widget": "checkbox"
+        }
+      ],
+      "nodeType": "section"
+    },
+    {
+      "slug": "care_plan",
+      "label": "Care plan",
+      "widget": "panel",
+      "children": [
+        {
+          "slug": "tasks",
+          "label": "Tasks",
+          "children": [
+            {
+              "slug": "goal_identifier",
+              "answerType": "number",
+              "label": "Goal identifier",
+              "nodeType": "question",
+              "tag": "member_careplan_goal_number"
+            },
+            {
+              "label": "Select category",
+              "nodeType": "question",
+              "widget": "radios",
+              "slug": "select_category",
+              "answerType": "text",
+              "tag": "member_careplan_category",
+              "answerEnum": [
+                {
+                  "label": "Chronic condition health literacy",
+                  "value": "chronic_condition_health_literacy"
+                },
+                {
+                  "label": "Medication adherence",
+                  "value": "medication_adherence"
+                },
+                {
+                  "label": "Provider engagement",
+                  "value": "provider_engagement"
+                },
+                {
+                  "label": "Basic services support",
+                  "value": "basic_services_support"
+                }
+              ]
+            },
+            {
+              "label": "Describe care plan goal and intervention details",
+              "nodeType": "question",
+              "widget": "textarea",
+              "slug": "goal_and_intervention_details",
+              "answerType": "text",
+              "tag": "member_careplan_goal_description"
+            },
+            {
+              "label": "Member\u2019s plan to achieve goal",
+              "nodeType": "question",
+              "widget": "textarea",
+              "slug": "member_plan_to_achieve_goal",
+              "answerType": "text",
+              "tag": "member_careplan_plan"
+            },
+            {
+              "label": "Readiness stage",
+              "nodeType": "question",
+              "widget": "radios",
+              "slug": "readiness_stage",
+              "answerType": "text",
+              "tag": "member_careplan_readiness",
+              "answerEnum": [
+                {
+                  "label": "Precontemplation",
+                  "value": "precontemplation"
+                },
+                {
+                  "label": "Contemplation",
+                  "value": "contemplation"
+                },
+                {
+                  "label": "Preparation",
+                  "value": "preparation"
+                },
+                {
+                  "label": "Action",
+                  "value": "action"
+                },
+                {
+                  "label": "Maintenance",
+                  "value": "maintenance"
+                }
+              ]
+            },
+            {
+              "label": "Status",
+              "nodeType": "question",
+              "widget": "radios",
+              "slug": "status",
+              "answerType": "text",
+              "tag": "member_careplan_status",
+              "answerEnum": [
+                {
+                  "label": "Complete",
+                  "value": "complete"
+                },
+                {
+                  "label": "Needs continued work",
+                  "value": "needs_continued_work"
+                },
+                {
+                  "label": "Will not complete",
+                  "value": "will_not_complete"
+                }
+              ]
+            },
+            {
+              "slug": "new_goal",
+              "answerType": "boolean",
+              "label": "New goal",
+              "nodeType": "question",
+              "widget": "yesNoRadios"
+            },
+            {
+              "label": "Needs to be discussed in interdisciplinary meeting?",
+              "nodeType": "question",
+              "widget": "yesNoRadios",
+              "slug": "needs_interdisciplinary_meeting",
+              "answerType": "boolean",
+              "tag": "member_careplan_needs_escalation"
+            },
+            {
+              "slug": "notes",
+              "answerType": "text",
+              "label": "Notes",
+              "nodeType": "question",
+              "widget": "textarea"
+            }
+          ],
+          "nodeType": "section"
+        }
+      ],
+      "nodeType": "section"
+    },
+    {
+      "slug": "additional",
+      "label": "Additional interventions and escalations",
+      "widget": "panel",
+      "children": [
+        {
+          "slug": "intervention_suggestions",
+          "answerType": "text",
+          "label": "Additional intervention suggestions",
+          "nodeType": "question",
+          "widget": "textarea"
+        },
+        {
+          "slug": "escalation_observations",
+          "label": "Escalation observations",
+          "widget": "questionGroup",
+          "children": [
+            {
+              "label": "Crisis issues",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "crisis_issues",
+              "answerType": "boolean",
+              "tag": "member_has_crisis_issues"
+            },
+            {
+              "label": "Needs a fall risk follow up",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "needs_fall_risk_follow_up",
+              "answerType": "boolean",
+              "tag": "member_needs_fall_risk_follow_up"
+            },
+            {
+              "label": "Lack of home safety",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "lacking_home_safety",
+              "answerType": "boolean",
+              "tag": "member_lacking_home_safety"
+            },
+            {
+              "label": "Other housing issues",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "other_housing_issues",
+              "answerType": "boolean",
+              "tag": "member_has_housing_issues"
+            },
+            {
+              "label": "Mental conditions",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "mental_conditions",
+              "answerType": "boolean",
+              "tag": "member_needs_help_behavioral_health"
+            },
+            {
+              "label": "Substance use",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "substance_use",
+              "answerType": "boolean",
+              "tag": "member_needs_help_substance_use"
+            },
+            {
+              "label": "Exposure to violence or neglect",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "exposure_to_violence_or_neglect",
+              "answerType": "boolean",
+              "tag": "member_has_exposure_violence_or_neglect"
+            },
+            {
+              "label": "Lack of caregiver support",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "lack_of_caregiver_support",
+              "answerType": "boolean",
+              "tag": "member_needs_help_caregiver"
+            },
+            {
+              "label": "Other SW escalation",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "other_sw_escalation",
+              "answerType": "boolean",
+              "tag": "member_needs_help_socialwork"
+            },
+            {
+              "label": "Increased chronic symptoms",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "increased_chronic_symptoms",
+              "answerType": "boolean",
+              "tag": "member_has_increase_chronic_symptoms"
+            },
+            {
+              "label": "Decreased activity levels",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "decreased_activity_levels",
+              "answerType": "boolean",
+              "tag": "member_has_decrease_activity"
+            },
+            {
+              "label": "Increased pain levels",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "increased_pain_levels",
+              "answerType": "boolean",
+              "tag": "member_has_increase_pain"
+            },
+            {
+              "label": "Other NP escalation",
+              "nodeType": "question",
+              "widget": "checkbox",
+              "slug": "other_np_escalation",
+              "answerType": "boolean",
+              "tag": "member_needs_help_np"
+            }
+          ],
+          "nodeType": "section"
+        },
+        {
+          "slug": "other_notes",
+          "label": "Other notes",
+          "children": [
+            {
+              "slug": "should_close_program_with_member",
+              "answerType": "boolean",
+              "label": "Close program with member?",
+              "nodeType": "question",
+              "widget": "yesNoRadios"
+            },
+            {
+              "slug": "time_spent_with_member",
+              "answerType": "number",
+              "label": "Time spent with member (in minutes)",
+              "nodeType": "question"
+            },
+            {
+              "slug": "other",
+              "answerType": "text",
+              "label": "Other notes, issues, blockers",
+              "nodeType": "question",
+              "widget": "textarea"
+            }
+          ],
+          "nodeType": "section"
+        }
+      ],
+      "nodeType": "section"
+    }
+  ]
+}

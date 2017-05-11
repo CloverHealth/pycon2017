@@ -1,0 +1,1373 @@
+{
+  "name": "Health Risk Assessment",
+  "slug": "hra",
+  "nodeType": "form",
+  "children": [
+    {
+      "widget": "panel",
+      "label": "Main",
+      "slug": "root",
+      "nodeType": "section",
+      "children": [
+        {
+          "label": {
+            "en": "First name",
+            "es": "Nombre"
+          },
+          "viewOnly": true,
+          "widget": "text",
+          "nodeType": "question",
+          "answerType": "text",
+          "slug": "first_name"
+        },
+        {
+          "label": {
+            "en": "Last name",
+            "es": "Apellido"
+          },
+          "viewOnly": true,
+          "widget": "text",
+          "nodeType": "question",
+          "answerType": "text",
+          "slug": "last_name"
+        },
+        {
+          "tag": "member_cpid",
+          "nodeType": "question",
+          "answerType": "text",
+          "widget": "text",
+          "label": {
+            "en": "Member ID",
+            "es": "N.\u00b0 de ident. de miembro de Clover"
+          },
+          "viewOnly": true,
+          "slug": "cpid"
+        },
+        {
+          "label": {
+            "en": "Date of birth",
+            "es": "Fecha de nacimiento"
+          },
+          "viewOnly": true,
+          "widget": "date",
+          "nodeType": "question",
+          "answerType": "date",
+          "slug": "date_of_birth"
+        },
+        {
+          "label": "How was this form completed?",
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "mail",
+              "label": "Mail"
+            }
+          ],
+          "answerType": "text",
+          "slug": "completed_by"
+        },
+        {
+          "widget": "questionGroup",
+          "label": {
+            "en": "How do you usually access the internet? (check all that apply)",
+            "es": "\u00bfC\u00f3mo suele acceder a Internet? (marque todas las opciones que correspondan)"
+          },
+          "slug": "internet_access",
+          "nodeType": "section",
+          "children": [
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Personal computer",
+                "es": "Computadora personal"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "personal_computer"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Smartphone",
+                "es": "Tel\u00e9fono inteligente"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "smartphone"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Tablet/iPad",
+                "es": "Tableta/iPad"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "tablet"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Library or community computer",
+                "es": "Computadora en biblioteca o comunitaria"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "library"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Through family or friends",
+                "es": "A trav\u00e9s de familiares o amigos"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "family_or_friends"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "I don't use the internet on a regular basis",
+                "es": "No uso Internet con regularidad"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "irregular_user"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Other",
+                "es": "Otra"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "other"
+            },
+            {
+              "indent": 1,
+              "label": {
+                "en": "Other",
+                "es": "Otra"
+              },
+              "widget": "text",
+              "nodeType": "question",
+              "show": {
+                "rule": {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".other",
+                    "operator": "var"
+                  }
+                },
+                "ruleType": "tree"
+              },
+              "answerType": "text",
+              "slug": "other_describe"
+            }
+          ]
+        },
+        {
+          "label": {
+            "en": "Please select the type of home you live in:",
+            "es": "Seleccione el tipo de casa en la que vive:"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "private_home",
+              "label": {
+                "en": "Private home",
+                "es": "Casa particular"
+              }
+            },
+            {
+              "value": "private_apartment",
+              "label": {
+                "en": "Private apartment",
+                "es": "Apartamento privado"
+              }
+            },
+            {
+              "value": "assisted_living_facility",
+              "label": {
+                "en": "Assisted-living facility",
+                "es": "Centro de vivienda asistida"
+              }
+            },
+            {
+              "value": "other",
+              "label": {
+                "en": "Other",
+                "es": "Otra"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "home_type"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Other",
+            "es": "Otra"
+          },
+          "widget": "text",
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": "other",
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".home_type",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "other_describe"
+        },
+        {
+          "widget": "questionGroup",
+          "label": {
+            "en": "Who do you live with?",
+            "es": "\u00bfCon qui\u00e9n vive?"
+          },
+          "slug": "living_partners",
+          "nodeType": "section",
+          "children": [
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Family",
+                "es": "Familia"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "family"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Friend or roommate",
+                "es": "Amigo o compa\u00f1ero de cuarto"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "roommate"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Caregiver",
+                "es": "Cuidador"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "caregiver"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "I live alone",
+                "es": "Vivo solo"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "alone"
+            }
+          ]
+        },
+        {
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Do you have a primary care doctor?",
+            "es": "\u00bfTiene un m\u00e9dico de atenci\u00f3n primaria?"
+          },
+          "nodeType": "question",
+          "answerType": "boolean",
+          "slug": "primary_care_doctor"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Please provide the name of your primary care doctor (first name, last name):",
+            "es": "Si la respuesta es \u201cs\u00ed\u201d, proporcione la siguiente informaci\u00f3n sobre su m\u00e9dico de atenci\u00f3n primaria: (Nombre completo)"
+          },
+          "widget": "text",
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_name"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Please provide the phone number of your primary care doctor (if known):",
+            "es": "N\u00famero de tel\u00e9fono:"
+          },
+          "widget": "text",
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_phone"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Please provide the address of your primary care doctor (if known):",
+            "es": "Direcci\u00f3n:"
+          },
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_address1"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Address line 2",
+            "es": "Direcci\u00f3n 2"
+          },
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_address2"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "City",
+            "es": "Ciudad"
+          },
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_city"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "State",
+            "es": "Estado"
+          },
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_state"
+        },
+        {
+          "indent": 1,
+          "label": {
+            "en": "Zipcode",
+            "es": "C\u00f3digo postal"
+          },
+          "nodeType": "question",
+          "show": {
+            "rule": {
+              "right": {
+                "value": true,
+                "operator": "const"
+              },
+              "operator": "eq",
+              "left": {
+                "value": ".primary_care_doctor",
+                "operator": "var"
+              }
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "text",
+          "slug": "primary_care_doctor_zipcode"
+        },
+        {
+          "label": {
+            "en": "In the last 7 days, how many days did you exercise?",
+            "es": "En los \u00faltimos 7 d\u00edas, \u00bfcu\u00e1ntos d\u00edas hizo actividad f\u00edsica?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "0",
+              "label": {
+                "en": "None",
+                "es": "Ninguno"
+              }
+            },
+            {
+              "value": "1_to_3",
+              "label": {
+                "en": "1 to 3",
+                "es": "De 1 a 3"
+              }
+            },
+            {
+              "value": "4_to_5",
+              "label": {
+                "en": "4 to 5",
+                "es": "De 4 a 5"
+              }
+            },
+            {
+              "value": "6_to_7",
+              "label": {
+                "en": "6 to 7",
+                "es": "De 6 a 7"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "exercise"
+        },
+        {
+          "label": {
+            "en": "Describe the type of exercise:",
+            "es": "Describa el tipo de actividad f\u00edsica:"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "no_exercise",
+              "label": {
+                "en": "I am currently not exercising",
+                "es": "Actualmente no hago actividad f\u00edsica"
+              }
+            },
+            {
+              "value": "light_exercise",
+              "label": {
+                "en": "Light (like stretching or slow walking)",
+                "es": "Ligera (como ejercicios de estiramiento o caminata lenta)"
+              }
+            },
+            {
+              "value": "moderate_exercise",
+              "label": {
+                "en": "Moderate (like brisk walking)",
+                "es": "Moderada (como caminata r\u00e1pida)"
+              }
+            },
+            {
+              "value": "heavy_exercise",
+              "label": {
+                "en": "Heavy (like jogging or swimming)",
+                "es": "Intensa (como trotar o nadar)"
+              }
+            },
+            {
+              "value": "very_heavy_exercise",
+              "label": {
+                "en": "Very heavy (like fast running or stair climbing)",
+                "es": "Muy intensa (como correr r\u00e1pido o subir escaleras)"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "exercise_description"
+        },
+        {
+          "tag": "member_health_vs_last_year",
+          "nodeType": "question",
+          "widget": "radios",
+          "label": {
+            "en": "How would you rate your physical health now compared to one year ago?",
+            "es": "\u00bfC\u00f3mo calificar\u00eda su salud f\u00edsica ahora en comparaci\u00f3n con un a\u00f1o atr\u00e1s?"
+          },
+          "answerEnum": [
+            {
+              "value": "much_better",
+              "label": {
+                "en": "Much better",
+                "es": "Mucho mejor"
+              }
+            },
+            {
+              "value": "slightly_better",
+              "label": {
+                "en": "Slightly better",
+                "es": "Un poco mejor"
+              }
+            },
+            {
+              "value": "same",
+              "label": {
+                "en": "Same",
+                "es": "Igual"
+              }
+            },
+            {
+              "value": "slightly_worse",
+              "label": {
+                "en": "Slightly worse",
+                "es": "Un poco peor"
+              }
+            },
+            {
+              "value": "much_worse",
+              "label": {
+                "en": "Much worse",
+                "es": "Mucho peor"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "health_comparison"
+        },
+        {
+          "label": {
+            "en": "Do you ever need any help with dressing, bathing, or going to the bathroom?",
+            "es": "Alguna vez necesit\u00f3 ayuda para vestirse, ba\u00f1arse o ir al ba\u00f1o?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "daily_help"
+        },
+        {
+          "tag": "member_times_fell_in_last_year",
+          "nodeType": "question",
+          "widget": "number",
+          "label": {
+            "en": "How many falls have you had in the past year?",
+            "es": "Cu\u00e1ntas ca\u00eddas sufri\u00f3 en el \u00faltimo a\u00f1o? (introduzca un d\u00edgito por casilla)"
+          },
+          "answerType": "number",
+          "slug": "falls"
+        },
+        {
+          "tag": "member_needs_help_transportation",
+          "nodeType": "question",
+          "widget": "radios",
+          "label": {
+            "en": "Do you need any help with transportation to leave the home?",
+            "es": "Necesita alguna ayuda con el transporte para salir de su casa?"
+          },
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "transportation_help"
+        },
+        {
+          "label": {
+            "en": "How often do you need help taking your medications?",
+            "es": "\u00bfCon qu\u00e9 frecuencia necesita ayuda para tomar sus medicamentos?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "medication_help"
+        },
+        {
+          "label": {
+            "en": "Do you need any help shopping for food or cooking meals?",
+            "es": "\u00bfNecesita ayuda para comprar alimentos o cocinar?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "food_help"
+        },
+        {
+          "label": {
+            "en": "Do you need any help eating meals?",
+            "es": "\u00bfNecesita ayuda para alimentarse?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "meals_help"
+        },
+        {
+          "label": {
+            "en": "Over the past 7 days, how many days did you eat fast food, pizza, or other processed foods?",
+            "es": "En los \u00faltimos 7 d\u00edas, \u00bfcu\u00e1ntos d\u00edas consumi\u00f3 comida r\u00e1pida, pizza u otros alimentos procesados?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "0",
+              "label": {
+                "en": "None",
+                "es": "Ninguno"
+              }
+            },
+            {
+              "value": "1_to_3",
+              "label": {
+                "en": "1 to 3",
+                "es": "De 1 a 3"
+              }
+            },
+            {
+              "value": "4_to_5",
+              "label": {
+                "en": "4 to 5",
+                "es": "De 4 a 5"
+              }
+            },
+            {
+              "value": "6_to_7",
+              "label": {
+                "en": "6 to 7",
+                "es": "De 6 a 7"
+              }
+            },
+            {
+              "value": "unsure",
+              "label": {
+                "en": "Unsure",
+                "es": "No estoy seguro"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "weekly_nutrition"
+        },
+        {
+          "tag": "member_alcohol_frequency",
+          "nodeType": "question",
+          "widget": "radios",
+          "label": {
+            "en": "If you drink alcohol, how often do you have 4 or more drinks on one occasion?",
+            "es": "Si bebe alcohol, \u00bfcon qu\u00e9 frecuencia consume 4 o m\u00e1s bebidas en una ocasi\u00f3n?"
+          },
+          "answerEnum": [
+            {
+              "value": "no_alcohol",
+              "label": {
+                "en": "I don't drink alcohol",
+                "es": "No bebo alcohol"
+              }
+            },
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "once_per_month",
+              "label": {
+                "en": "Once a month",
+                "es": "Una ves al mes"
+              }
+            },
+            {
+              "value": "once_per_week",
+              "label": {
+                "en": "Once a week",
+                "es": "Una ves a la semana"
+              }
+            },
+            {
+              "value": "2_to_3_per_week",
+              "label": {
+                "en": "2 to 3 times per week",
+                "es": "De 2 a 3 veces por semana"
+              }
+            },
+            {
+              "value": "more_than_3_per_week",
+              "label": {
+                "en": "More than 3 times per week",
+                "es": "M\u00e1s de 3 veces por semana"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "quantity_alcohol"
+        },
+        {
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Do you use any smokeless tobacco products? (example: chewing or sniffing tobacco)",
+            "es": "\u00bfUtiliza productos de tabaco sin humo? (por ej., tabaco de mascar o inhalar)"
+          },
+          "nodeType": "question",
+          "answerType": "boolean",
+          "slug": "smokeless_tobacco"
+        },
+        {
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Are you a current smoker?",
+            "es": "\u00bfFuma en la actualidad?"
+          },
+          "nodeType": "question",
+          "answerType": "boolean",
+          "slug": "smoker"
+        },
+        {
+          "widget": "number",
+          "label": {
+            "en": "If you are a current or former smoker, how many cigarettes per day on average do you smoke or did you smoke?",
+            "es": "Si fuma en la actualidad o es un ex fumador, \u00bfcu\u00e1ntos cigarrillos por d\u00eda, en promedio, fuma o fumaba? (introduzca un d\u00edgito por casilla)"
+          },
+          "nodeType": "question",
+          "answerType": "number",
+          "slug": "daily_cigarettes"
+        },
+        {
+          "widget": "number",
+          "label": {
+            "en": "If you are a current or former smoker, how many years have you smoked or did you smoke?",
+            "es": "Si fuma en la actualidad o es un ex fumador, \u00bfhace cu\u00e1ntos a\u00f1os fuma o cu\u00e1ntos a\u00f1os fum\u00f3? (introduzca un d\u00edgito por casilla)"
+          },
+          "nodeType": "question",
+          "answerType": "number",
+          "slug": "smoking_years"
+        },
+        {
+          "tag": "member_recreational_drug_use",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Do you currently use any recreational substances or self-prescribed medications?",
+            "es": "\u00bfConsume actualmente sustancias recreativas o medicamentos autorrecetados?"
+          },
+          "answerType": "boolean",
+          "slug": "recreational_drug_use"
+        },
+        {
+          "widget": "questionGroup",
+          "label": {
+            "en": "Over the last year, have you been treated for any of the following conditions? (check all that apply)",
+            "es": "En el \u00faltimo a\u00f1o, \u00bfrecibi\u00f3 tratamiento por alguna de las siguientes afecciones? (marque todas las opciones que correspondan)"
+          },
+          "slug": "medical_conditions",
+          "nodeType": "section",
+          "children": [
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Heart disease (heart attack, congestive heart failure - CHF, angina)",
+                "es": "Enfermedad card\u00edaca (ataque card\u00edaco, insuficiencia card\u00edaca congestiva [congestive heart failure, CHF], angina de pecho)"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "heart_disease"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "High blood pressure (hypertension)",
+                "es": "Presi\u00f3n arterial alta (hipertensi\u00f3n)"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "high_blood_pressure"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Irregular heart rhythm (atrial fibrillation)",
+                "es": "Ritmo card\u00edaco irregular (fibrilaci\u00f3n atrial)"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "irregular_rhythm"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Lung diseases (COPD, emphysema, asthma)",
+                "es": "Enfermedades pulmonares (enfermedad pulmonar obstructiva cr\u00f3nica [chronic obstructive pulmonary disease, COPD], enfisema pulmonar, asma)"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "lung_diseases"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Diabetes",
+                "es": "Diabetes"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "diabetes"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Arthritis",
+                "es": "Artritis"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "arthritis"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Chronic pain",
+                "es": "Dolor cr\u00f3nico"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "chronic_pain"
+            },
+            {
+              "widget": "checkbox",
+              "label": {
+                "en": "Chronic fatigue",
+                "es": "Fatiga cr\u00f3nica"
+              },
+              "nodeType": "question",
+              "answerType": "boolean",
+              "slug": "chronic_fatigue"
+            },
+            {
+              "nodeType": "section",
+              "children": [
+                {
+                  "widget": "checkbox",
+                  "label": {
+                    "en": "Walker",
+                    "es": "Andador"
+                  },
+                  "nodeType": "question",
+                  "answerType": "boolean",
+                  "slug": "walker"
+                },
+                {
+                  "widget": "checkbox",
+                  "label": {
+                    "en": "Cane",
+                    "es": "Bast\u00f3n"
+                  },
+                  "nodeType": "question",
+                  "answerType": "boolean",
+                  "slug": "cane"
+                },
+                {
+                  "widget": "checkbox",
+                  "label": {
+                    "en": "Wheelchair",
+                    "es": "Silla de ruedas"
+                  },
+                  "nodeType": "question",
+                  "answerType": "boolean",
+                  "slug": "wheelchair"
+                },
+                {
+                  "widget": "checkbox",
+                  "label": {
+                    "en": "Scooter",
+                    "es": "Esc\u00fater"
+                  },
+                  "nodeType": "question",
+                  "answerType": "boolean",
+                  "slug": "scooter"
+                },
+                {
+                  "widget": "checkbox",
+                  "label": {
+                    "en": "None",
+                    "es": "Ninguno"
+                  },
+                  "nodeType": "question",
+                  "answerType": "boolean",
+                  "slug": "none"
+                }
+              ],
+              "widget": "questionGroup",
+              "label": {
+                "en": "Do you use any of the following to help you get around?",
+                "es": "\u00bfUtiliza algunos de los siguientes elementos para movilizarse?"
+              },
+              "slug": "mobility_help"
+            }
+          ]
+        },
+        {
+          "widget": "number",
+          "label": {
+            "en": "How many different medications do you currently take on a daily basis?",
+            "es": "\u00bfCu\u00e1ntos tipos de medicamentos diferentes consume actualmente a diario? (introduzca un d\u00edgito por casilla)"
+          },
+          "nodeType": "question",
+          "answerType": "number",
+          "slug": "daily_medications"
+        },
+        {
+          "widget": "number",
+          "label": {
+            "en": "About how many times have you been to the emergency department over the last year?",
+            "es": "En el \u00faltimo a\u00f1o, \u00bfcu\u00e1ntas veces tuvo que asistir al departamento de emergencias? (introduzca un d\u00edgito por casilla)"
+          },
+          "nodeType": "question",
+          "answerType": "number",
+          "slug": "emergency_visits"
+        },
+        {
+          "tag": "member_feels_depressed_often",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Do you often feel sad or depressed?",
+            "es": "\u00bfSe siente triste o depresivo con frecuencia?"
+          },
+          "answerType": "boolean",
+          "slug": "depressed"
+        },
+        {
+          "tag": "member_emotion_vs_last_year",
+          "nodeType": "question",
+          "widget": "radios",
+          "label": {
+            "en": "How would you rate your emotional health (feeling anxious or depressed) now compared to one year ago?",
+            "es": "\u00bfC\u00f3mo calificar\u00eda su salud emocional (sensaci\u00f3n de ansiedad o depresi\u00f3n) ahora en comparaci\u00f3n con un a\u00f1o atr\u00e1s?"
+          },
+          "answerEnum": [
+            {
+              "value": "much_better",
+              "label": {
+                "en": "Much better",
+                "es": "Mucho mejor"
+              }
+            },
+            {
+              "value": "slightly_better",
+              "label": {
+                "en": "Slightly better",
+                "es": "Un poco mejor"
+              }
+            },
+            {
+              "value": "same",
+              "label": {
+                "en": "Same",
+                "es": "Igual"
+              }
+            },
+            {
+              "value": "slightly_worse",
+              "label": {
+                "en": "Slightly worse",
+                "es": "Un poco peor"
+              }
+            },
+            {
+              "value": "much_worse",
+              "label": {
+                "en": "Much worse",
+                "es": "Mucho peor"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "depression_comparison"
+        },
+        {
+          "label": {
+            "en": "How often do you get the social and emotional support you need?",
+            "es": "\u00bfCon qu\u00e9 frecuencia obtiene el apoyo social o emocional que necesita?"
+          },
+          "widget": "radios",
+          "nodeType": "question",
+          "answerEnum": [
+            {
+              "value": "never",
+              "label": {
+                "en": "Never",
+                "es": "Nunca"
+              }
+            },
+            {
+              "value": "rarely",
+              "label": {
+                "en": "Rarely",
+                "es": "Raras veces"
+              }
+            },
+            {
+              "value": "sometimes",
+              "label": {
+                "en": "Sometimes",
+                "es": "A veces"
+              }
+            },
+            {
+              "value": "usually",
+              "label": {
+                "en": "Usually",
+                "es": "Casi siempre"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "en": "Always",
+                "es": "Siempre"
+              }
+            }
+          ],
+          "answerType": "text",
+          "slug": "support_frequency"
+        },
+        {
+          "tag": "member_lacking_food",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "In the last 12 months, did you ever eat less than you felt you should because there wasn't enough money for food?",
+            "es": "En los \u00faltimos 12 meses, \u00bfse aliment\u00f3 menos de lo que deb\u00eda por no tener dinero para comprar alimentos?"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_food"
+        },
+        {
+          "tag": "member_lacking_utilities",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "In the last 12 months, has your utility company shut off your service for not paying your bills?",
+            "es": "En los \u00faltimos 12 meses, \u00bfle cort\u00f3 su empresa de servicios p\u00fablicos los servicios por no pagar sus facturas?"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_utilities"
+        },
+        {
+          "tag": "member_lacking_stable_housing",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Are you worried that in the next 2 months, you may not have stable housing?",
+            "es": "\u00bfLe preocupa no poder tener una vivienda estable en los pr\u00f3ximos 2 meses?"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_stable_housing"
+        },
+        {
+          "tag": "member_lacking_medical_care",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "In the last 12 months, have you needed to see a doctor, but could not because of cost?",
+            "es": "En los \u00faltimos 12 meses, \u00bfnecesit\u00f3 visitar a un m\u00e9dico, pero no pudo hacerlo debido al costo?"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_medical_care"
+        },
+        {
+          "tag": "member_lacking_transportation",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "In the last 12 months, have you ever had to go without health care because you didn't have a way to get there? (for example: not being able to visit your doctor or go to the pharmacy to get your medications)",
+            "es": "En los \u00faltimos 12 meses, \u00bfestuvo sin poder recibir atenci\u00f3n m\u00e9dica porque no ten\u00eda una manera de llegar all\u00ed? (Por ejemplo, no poder ir a una consulta con su m\u00e9dico o a la farmacia para obtener sus medicamentos)"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_transportation"
+        },
+        {
+          "tag": "member_lacking_home_safety",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "Are you afraid you might be hurt in your apartment building or house?",
+            "es": "\u00bfTiene usted miedo de sufrir alguna lesi\u00f3n en su edificio de apartamentos o casa?"
+          },
+          "answerType": "boolean",
+          "slug": "lacking_home_safety"
+        },
+        {
+          "tag": "member_requests_basic_needs_assistance",
+          "nodeType": "question",
+          "widget": "yesNoRadios",
+          "label": {
+            "en": "If you checked YES to any boxes above, would you like to receive assistance with any of these needs?",
+            "es": "Si marc\u00f3 la opci\u00f3n \u201cs\u00ed\u201d en las preguntas 29 a 34, \u00bfle gustar\u00eda recibir ayuda con algunas de estas necesidades?"
+          },
+          "show": {
+            "rule": {
+              "operands": [
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_food",
+                    "operator": "var"
+                  }
+                },
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_utilities",
+                    "operator": "var"
+                  }
+                },
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_stable_housing",
+                    "operator": "var"
+                  }
+                },
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_medical_care",
+                    "operator": "var"
+                  }
+                },
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_transportation",
+                    "operator": "var"
+                  }
+                },
+                {
+                  "right": {
+                    "value": true,
+                    "operator": "const"
+                  },
+                  "operator": "eq",
+                  "left": {
+                    "value": ".lacking_home_safety",
+                    "operator": "var"
+                  }
+                }
+              ],
+              "operator": "or"
+            },
+            "ruleType": "tree"
+          },
+          "answerType": "boolean",
+          "slug": "assistance"
+        }
+      ]
+    }
+  ]
+}

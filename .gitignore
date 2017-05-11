@@ -1,14 +1,23 @@
-### Python ###
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL python files
 __pycache__/
 
 # PyCharm artifacts
 .idea/
 
-# venv/virtualenv stuff
-.python-version
+# pyenv files
+**/.python-version
 
-**/.DS_Store
+# pytest artifacts
 .cache/
 
+# unit test suite artifacts
+.test_db/
+
+# perf test artifacts (default)
+.perf_dbs/
+
+# Jupyter Notebook artifacts
 .ipynb_checkpoints/
+
+# OS X artifacts
+**/.DS_Store

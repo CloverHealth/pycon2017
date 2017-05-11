@@ -1,0 +1,109 @@
+{
+  "name": "General Form",
+  "nodeType": "form",
+  "slug": "general_form",
+  "children": [
+    {
+      "label": "Main",
+      "widget": "panel",
+      "slug": "main",
+      "nodeType": "section",
+      "children": [
+        {
+          "widget": "text",
+          "slug": "first_name",
+          "label": "First name",
+          "answerType": "text",
+          "viewOnly": true,
+          "nodeType": "question"
+        },
+        {
+          "widget": "text",
+          "slug": "last_name",
+          "label": "Last name",
+          "answerType": "text",
+          "viewOnly": true,
+          "nodeType": "question"
+        },
+        {
+          "widget": "text",
+          "slug": "cpid",
+          "label": "Member ID",
+          "answerType": "text",
+          "viewOnly": true,
+          "nodeType": "question"
+        },
+        {
+          "widget": "radios",
+          "slug": "preferred_language",
+          "label": "Preferred language",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "Address",
+          "widget": "text",
+          "slug": "address_1",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "Address (line 2)",
+          "widget": "text",
+          "slug": "address_2",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "City",
+          "widget": "text",
+          "slug": "city",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "State",
+          "widget": "text",
+          "slug": "state",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "Zipcode",
+          "widget": "text",
+          "slug": "zipcode",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "Gender",
+          "widget": "ignore",
+          "slug": "gender",
+          "answerType": "text",
+          "nodeType": "question"
+        },
+        {
+          "label": "Are you a first time member?",
+          "widget": "checkbox",
+          "slug": "new_member",
+          "answerType": "boolean",
+          "nodeType": "question"
+        },
+        {
+          "label": "When did you join us?",
+          "widget": "date",
+          "slug": "signed_on",
+          "answerType": "date",
+          "nodeType": "question"
+        },
+        {
+          "label": "How old are you?",
+          "widget": "text",
+          "slug": "age",
+          "answerType": "number",
+          "nodeType": "question"
+        }
+      ]
+    }
+  ]
+}
