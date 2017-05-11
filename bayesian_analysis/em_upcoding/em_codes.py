@@ -1,8 +1,6 @@
 """
 Defining Functions To help with looking at EM Upcoding and Ranking
 """
-import datetime as dt
-
 import sqlalchemy as sa
 import sqlalchemy.dialects.postgresql as pg
 

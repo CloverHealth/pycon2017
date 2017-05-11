@@ -9,7 +9,6 @@ import sqlalchemy as sa
 
 from em_upcoding import em_codes as em
 
-
 # Test database setup
 
 TARGET_SCHEMA = "data_science"
@@ -20,6 +19,8 @@ METADATA = sa.MetaData()
 MEDICAL_CLAIMS__FACT_MEDICAL_CLAIM_LINES_ALL = sa.Table(
     'fact_medical_claim_lines_all',
     METADATA,
+    sa.Column('personid', sa.Integer),
+    sa.Column('servicing_provider_npi', sa.Text),
     sa.Column('servicing_provider_npi', sa.Text),
     sa.Column('claim_line_internal_status', sa.Text),
     sa.Column('claim_status', sa.Text),
