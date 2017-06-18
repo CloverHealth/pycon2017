@@ -9,7 +9,8 @@ from app.util.timestamps import utc_now
 
 __all__ = [
     'init_database'
-    'Form'
+    'Form',
+    'BaseModel'
 ]
 
 SCHEMAS = {
