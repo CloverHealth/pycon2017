@@ -47,10 +47,6 @@ When your finished or if the model schema has changed, just run the following
 
     python main.py generate myscenario
 
-You can then connect to the database to review your results as follows:
-
-    python main.py psql myscenario
-
 
 ## Performance testing
 
@@ -60,7 +56,19 @@ You can then connect to the database to review your results as follows:
 
 Run the following:
 
-    python main.py process myscenario large-chunks
+    python main.py process myscenario naive-single
+
+You can then connect to the database to review your results as follows:
+
+    python main.py psql myscenario
+
+To review your results you can type:
+
+    \d clover_app.*
+OR
+
+    \d clover_dwh.*
+
 
 #### SQL Logging
 
