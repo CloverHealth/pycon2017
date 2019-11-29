@@ -1,4 +1,4 @@
-# Bayesian Analysis
+# Bayesian Analysis (EM Upcoding Example)
 
 ## Requirements
 
