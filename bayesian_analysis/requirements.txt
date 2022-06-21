@@ -1,7 +1,7 @@
 jupyter
 matplotlib
 names==0.3.0
-numpy==1.12.1
+numpy==1.22.0
 pandas==0.19.2
 psycopg2==2.7.1
 pytest==3.0.7
